@@ -1,0 +1,19 @@
+The GOPHER doctype
+
+Format:
+The GOPHER doctype expects to find text files.  The doctype can then
+handle presents in one of two ways.  An "F" present is always handled by
+dumping the entire content of the file, but the "B" filename is ever
+so slightly subtle.
+
+If the text file is named /local/path/textfile, then the "B" present
+method will try to open a file named /local/path/.cap/textfile.  If this
+open is successful, the contents of the capfile will be used to form
+the headline.  If the open is unsuccessful, then the headline will
+be "textfile", which is the name of the file.
+
+When compiling, if you #define FULLFILENAME then the headline will
+consist of a fully-qualified filename.  Otherwise the headline will
+consist only of the basename.  I don't know which way you'd rather have
+it, so you decide.
+

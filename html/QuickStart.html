@@ -1,0 +1,320 @@
+<!doctype html public "-//IETF//DTD HTML//EN">
+<HTML>
+
+<HEAD>
+
+<TITLE>Isearch Quick Start Guide</TITLE>
+
+<META NAME="GENERATOR" CONTENT="Internet Assistant for Word 0.95">
+<META NAME="AUTHOR" CONTENT="Archibald Warnock">
+<META NAME="OPERATOR" CONTENT="Archibald Warnock">
+</HEAD>
+
+<BODY BGCOLOR="FFFFFF" TEXT="000000" LINK="0000FF" VLINK="B60000" ALINK="66D15E">
+<H1>Isearch Quick Start Guide</H1>
+
+<H2>or, Installing and Using Isearch for the Hopelessly Impatient<br>
+with Slightly More Thorough Instructions for Those who Care.
+</H2>
+
+<h2>Erik Scott, Scott Technologies, Inc.</h2>
+
+<P>
+Isearch is a text search system developed by CNIDR.  CNIDR is
+the Center for Networked Information Discovery and Retrieval.
+ They are part of a non-profit corporation known as MCNC.  MCNC
+used to stand for &quot;Microelectronics Center of North Carolina&quot;,
+but they dropped the long form and now they're legally just MCNC.
+ Anyway, the lawyers thought you'd like to know that.
+<P>
+Isearch pretty much does one thing:  it lets the user search through
+a bunch of text by hunting for words.  It doesn't &quot;understand&quot;
+your text collection, it doesn't try to parse it, it just uses
+slightly-less-than-brute-force statistical methods to hunt for
+words in documents.  It does this by building indexes.  An Isearch
+index is a just like the index in a book:  if you look for a word
+in the index of a book, it tells you a page number to look at.
+ Likewise, if you search for a word with Isearch, it looks in
+the index for a filename associated with that word and then shows
+that file to you.  It can do more complicated things, but that's
+the basic game plan.
+<P>
+Installing Isearch requires five steps:
+<OL>
+<LI>Get Isearch.  If you're reading this, there's a good chance
+you've already finished this step and the next one.
+<LI>Uncompress and un-tar the distribution.  Again, unless someone
+printed this and put it on your desk, you're through with this
+step, too.
+<LI>Edit the Makefile.  This is where you tell Isearch what kind
+of machine you have.  If you have a fairly mainstream Unix box,
+there won't be any problem.  If you have a strange machine, then
+you've probably had a lot of practice porting software by now
+anyway.
+<LI>Compile.  If you did Step 3 correctly, then this is a no-brainer.
+On the other hand, this is rarely a no-brainer in the real world.
+<LI>Index and search some sample text so you know you did things
+right.
+</OL>
+
+<P>
+Really, installation usually isn't tricky at all.  Start to finish
+should take around thirty minutes the first time, and about ten
+when you download new versions.
+<H2>STEP 0: GET GCC and GZIP</H2>
+
+<P>
+Okay, we lied: There's an extra step.  You really should have
+gcc and g++ on your machine, and you must have gzip (and its companion
+gunzip) so you can unpack the archive that Isearch comes in. 
+You can get gzip and gcc via anonymous ftp from prep.ai.mit.edu
+in the directory /pub/gnu.  Gzip installation is fairly simple.
+ Unpack the tar file and follow the instructions in the file &quot;README&quot;.
+ Installing gcc and g++ is a lot more complicated.  In principle,
+you could use a vendor-supplied C++ compiler.  The Solaris SparcWorks
+C++ compiler is known to work, and the CenterLine C++ compiler
+has also compiled Isearch successfully.  The bad news is that
+there are several subtly different versions of the C++ specification
+and each compiler views it a little differently.  Getting Isearch
+to work with a different compiler is about like porting Isearch
+to another machine.  Isearch is also fairly dependent on compiler
+versions, especially with gcc.  Gcc users should make sure they
+are using at least 2.7.X.  Note that the old, pre-compiled gcc
+for Solaris is not meant to be a general-purpose compiler: it's
+just enough of a compiler to compile a newer version of gcc.
+<P>
+Incidentally: You're also going to have to install libg++ if you
+haven't already.  SAme ftp site, same directory.  Install it after
+you install g++.
+<H2>STEP 1: GET ISEARCH</H2>
+
+<P>
+You should always work from the latest version of Isearch available.
+Bugs are being corrected and new features are being added daily
+(literally).  You can always get the newest version from ftp.cnidr.org.
+ Here's a sample session where we will download today's version
+of Isearch from ftp.cnidr.org by logging in as &quot;anonymous&quot;,
+sending our email address as our password, changing the current
+directory to &quot;/pub/NIDR.tools/Isearch&quot;, making sure
+we're in binary mode for ftp, and getting the file:
+<PRE>
+sti-gw% ftp ftp.cnidr.org
+Connected to kudzu.cnidr.org.
+220 kudzu FTP server (Version wu-2.4(1) Sun Jan 1 17:43:49 EST 1995) ready.
+Name (ftp.cnidr.org:escott): anonymous
+331 Guest login ok, send your complete e-mail address as password.
+Password:
+230- Welcome to kudzu.cnidr.org
+230- 
+230- ftp logged in from sti-gw.sti-ext.com at Mon Mar 25 11:14:59 1996
+230- 
+230- There are currently 7 users of the maximum 25 logged on.
+230- 
+230- If you have trouble using this experimental FTP client, try including
+230- a dash in front of your username (as your login password).  This will
+230- disable informational messages such as these.
+230- 
+230- Comments???  Send mail to `bmv@k12.cnidr.org`
+230-
+230-
+230 Guest login ok, access restrictions apply.
+ftp&gt; cd /pub/NIDR.tools/Isearch   
+250-Please read the file README
+250-  it was last modified on Fri Mar 22 15:41:06 1996 - 3 days ago
+250 CWD command successful.
+ftp&gt; dir
+200 PORT command successful.
+150 Opening ASCII mode data connection for /bin/ls.
+total 4995
+-rw-rw-r--   1 138      30     1026816 Mar 22 20:40 Isearch-1.13-aix.tar.gz
+-rw-rw-r--   1 138      30      480568 Mar 22 20:40 Isearch-1.13-linux.tar.gz
+-rw-rw-r--   1 138      30     1176479 Mar 22 20:40 Isearch-1.13-osf1.tar.gz
+-rw-rw-r--   1 138      30      667405 Mar 22 20:40 Isearch-1.13-solaris.tar.gz
+-rw-rw-r--   1 138      30      741496 Mar 22 20:40 Isearch-1.13-sunos.tar.gz
+-rw-rw-r--   1 138      30      808411 Mar 22 20:41 Isearch-1.13-ultrix.tar.gz
+-rw-rw-r--   1 138      30      125536 Mar 22 20:41 Isearch-1.13.tar.gz
+-rw-rw-r--   1 138      30         970 Mar 22 20:41 README
+drwxrwxr-x  11 138      30         512 Mar 22 20:16 archive
+drwxrwxr-x   2 138      30        1024 Mar 22 20:43 untested
+226 Transfer complete.
+772 bytes received in 0.031 seconds (24 Kbytes/s)
+ftp&gt; binary
+200 Type set to I.
+ftp&gt; get Isearch-1.13.tar.gz
+200 PORT command successful.
+150 Opening BINARY mode data connection for Isearch-1.13.tar.gz (125536 bytes).
+226 Transfer complete.
+local: Isearch-1.13.tar.gz remote: Isearch-1.13.tar.gz
+125536 bytes received in 0.12 seconds (9.9e+02 Kbytes/s)
+ftp&gt; quit
+sti-gw% 
+</PRE>
+
+<P>
+Notice a few things:
+<OL>
+<LI>There are precompiled binary kits for IBM RS6000, Linux on
+an Intel box, DEC OSF/1 (now called Digital Unix, soon to be called
+&quot;The Operating System Formerly Known as 'Prince'&quot;) for
+Alpha (now know as Alpha AXP), Solaris 2.X for Sparc, SunOS 4.1.X
+for Sparc, and Ultrix for DEC PMAX architectures (DECstation 3100s,
+5000s, and their kin).  If you have one of these machines and
+you really can't get Isearch to compile in step 4, consider using
+one of these binary kits.  If you don't have one of the above
+architectures then you're going to have to build from source code
+anyway.
+<LI>There is a directory named &quot;untested&quot;.  The files
+in that directory are, well, untested.  If you need an absolutely
+newest and greatest version, then look in here.
+</OL>
+
+<H2>STEP 2: UNCOMPRESS AND UN-TAR THE DISTRIBUTION</H2>
+
+<P>
+You should now have a copy of Isearch as a gzipped tar tar.  The
+&quot;.gz&quot; suffix indicates a gzipped file, and the &quot;.tar&quot;
+suffix indicates it's tarred.  The first thing to do is to uncompress
+the file:
+<P>
+<TT>sti-gw% gunzip Isearch-1.13.tar.gz</TT>
+<P>
+You now have a (much larger) file called &quot;Isearch-1.13.tar&quot;.
+<P>
+The next step is to un-tar the file we just uncompressed.  In
+our example, we're going to want to install Isearch so it has
+the path name &quot;/local/project/Isearch-1.13&quot;.  To do
+this, copy or move the file to &quot;/local/project&quot;:
+<P>
+<TT>sti-gw% mv Isearch-1.13 /local/project</TT>
+<P>
+Finally, we'll un-tar the distribution:
+<P>
+<TT>sti-gw$ cd /local/project</TT>
+<P>
+<TT>sti-gw% tar xf Isearch-1.13.tar</TT>
+<P>
+There should now be a directory named /local/project/Isearch-1.13,
+and it should contain the Isearch distribution:
+<PRE>
+sti-gw% ls /local/project/Isearch-1.13
+CHANGES    Makefile   TUTORIAL   doctype
+COPYRIGHT  README     bin        src
+</PRE>
+
+<P>
+If you see all of that, then you probably got it right.
+<H2>STEP 3: EDIT THE MAKEFILE</H2>
+
+<P>
+This is the part that makes people nervous, but it really isn't
+that bad at all.  You need to edit the Makefile with your favorite
+editor, and essentially just follow the instructions.  Edit /local/project/Isearch-1.13/Makefile
+in this example (you won't have to edit the makefiles in the subdirectories,
+they automatically inherit what they need).
+<P>
+The first choice is for compiler.  Probably 99% of the world should
+leave the default &quot;g++&quot;.  Isearch is developed by people
+who use g++, so that's your best bet.  It's also hard to beat
+the price.  
+<P>
+The second choice is for &quot;CFLAGS&quot;, which are the options
+to pass to the compiler.  There are canned selections for you
+to choose from.  If you don't know what to select, then &quot;CFLAGS=-g
+-DUNIX -Wall&quot; is a good starting guess.
+<P>
+The third choice is for the location to install the finished programs.
+The default &quot;/usr/local/bin&quot; is a good guess.  Note
+that if you don't elect to actually &quot;make install&quot; in
+step 4 then you'll never have to set this.
+<P>
+The rest of the choices probably should be left alone.
+<P>
+While on the subject of editing files, it's worth noting that
+the file /local/project/Isearch-1.13/doctype/dtconf.inf describe
+how many &quot;doctypes&quot; your copy of Isearch will be aware
+of.  A doctype is essentially a file type handler; there are doctypes
+for simple ASCII files, files of separate paragraphs, and so forth.
+ You can almost always just leave this file alone and take the
+default, which is &quot;Give me all of 'em!&quot;.
+<H2>STEP 4: COMPILE</H2>
+
+<P>
+At this point, you should be able to 
+<PRE>
+sti-gw% cd /local/project/Isearch-1.13
+sti-gw% make
+</PRE>
+
+<P>
+And all the right things will happen.  Note that many compilers
+will print a few warning lines along the way, but they're warning
+about pretty harmless stuff.  If there are any errors, then the
+compilation will grind to a halt.  Otherwise, when you're done
+there will be new files in the &quot;bin&quot; subdirectory:
+<PRE>
+sti-gw% ls bin
+Iindex        Isearch       Iutil         libIsearch.a
+</PRE>
+
+<P>
+If you got that far, then you can (optionally) :
+<PRE>
+sti-gw% make install
+</PRE>
+
+<P>
+and the compiled executables will be copied to /usr/local/bin.
+<H2>STEP 5: INDEX SOME TEXT AND SEE HOW IT WORKS</H2>
+
+<P>
+Now let's index a little text and see if Isearch really works.
+ First, let's pick a couple of files to index.  In this example,
+we'll index the files &quot;CHANGES&quot; and &quot;COPYRIGHT&quot;
+since we know everyone has them.
+<PRE>
+sti-gw% cd /local/project/Isearch-1.13
+sti-gw% mkdir testIndex
+sti-gw% cd testIndex
+sti-gw% /local/project/Isearch-1.13/bin/Iindex -d tester ../CHANGES ../COPYRIGHT
+Iindex 1.13
+Building document list ...
+Building database tester:
+   Parsing files ...
+   Parsing /local/project/Isearch-1.13/CHANGES ...
+   Parsing /local/project/Isearch-1.13/COPYRIGHT ...
+   Indexing 1870 words ...
+   Merging index ...
+Database files saved to disk.
+sti-gw% ls
+tester.dbi  tester.inx  tester.mdg  tester.mdk  tester.mdt
+</PRE>
+
+<P>
+That created five index files to describe the two files we indexed.
+Don't worry, we could have indexed every file on your system and
+still only had five index files.  Now let's do a little searching
+and see how well we did:
+<PRE>
+sti-gw% /local/project/Isearch-1.13/bin/Isearch -d tester RSET table
+../bin/Isearch -d tester RSET table
+Isearch 1.13
+Searching database tester:
+1 document(s) matched your query, 1 document(s) displayed.
+      Score   File
+   1.   100   /local/project/Isearch-1.13/CHANGES
+Select file #: 
+</PRE>
+
+<P>
+At this point, if you enter &quot;1&quot; and press return, it
+will display the contents of &quot;CHANGES&quot;.  If you press
+return without a number, Isearch will exit.  This is sort of a
+trivial example, but if you index thousands of files then the
+above search will list the ones that contain either &quot;RSET&quot;
+or &quot;table&quot;.  If you run Isearch without any arguments
+then it will give a list of all of its options, what they mean,
+and some examples of their use.  For more information, see the
+Isearch Tutorial included with the distribution.
+</BODY>
+
+</HTML>

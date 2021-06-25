@@ -1,0 +1,132 @@
+# $Id: UnifiedList.txt,v 1.2 1996/07/10 19:21:08 cnidr Exp $
+#
+# Unified Field Names (U.S. English)
+#
+# Format:
+#   presentation-string  bib-1-number
+#
+# Extensions without Value should NOT include a value
+# --- an internal use value will be generated
+#
+# The '#' can be used to insert comments to end-of-line.
+#
+#
+# $Log: UnifiedList.txt,v $
+# Revision 1.2  1996/07/10 19:21:08  cnidr
+# *** empty log message ***
+#
+# Revision 1.3  1995/08/23  21:16:24  edz
+# Added some comments
+#
+#
+Abstract 62
+Author-name 1003
+Author-name-conference 1006
+Author-name-corporate 1005
+Author-name-personal 1004
+Author-title 1000
+Body 1010
+Cinematagrapher
+Classification-Bliss 15
+Classification-Dewey 13
+Classification-LC 16
+Classification-MOS 19
+Classification-NAL 18
+Classification-NLM 17
+Classification-UDC 14
+Classification-govt-publication 50
+Classification-local 20
+Code-geographic-area 55
+Code-institution 56
+Code-language 54
+Code-microform-generation 61
+Commentary
+Concept-reference 1015
+Concept-text 1014
+Content-type 1034
+Date 30
+Date-acquisition 32
+Date-publication 31
+Director
+Distributor
+Editor 1020
+Fee-GEMA # German artists fees
+Fee-Purchase
+Fee-Rent
+Geographic-class 1022
+Headline # Could be title or mix of title/author etc.
+Identifier-CODEN 60
+Identifier-ISBN 7
+Identifier-ISSN 8
+Identifier-legal-deposit 49
+Identifier-local-call 53
+Identifier-national-bibliography 48
+Identifier-publisher-for-music 51
+Identifier-standard 1007
+Identifier-URL	# Universal Resource Locator of "source"
+Locus
+Map-scale 1024
+Material-type 1031
+Media-Descriptor
+Media-Length
+Music-key 1025
+Name 1002
+Name-conference 3
+Name-corporate 2
+Name-geographic 58
+Name-geographic-place-publication 59 # Also used a country
+Name-personal 1
+Note 63
+Nucleic-Acid # Genbank etc stuff
+Nucleic-Acid-Count # Genbank etc. stuff
+Number-BNB 10
+Number-BNF 11
+Number-DB 52
+Number-LC 9
+Number-local 12
+# Other-Fields
+Page-Numbers # Bibliographies
+Producer
+Publisher 1018
+Rating # Medial control board stuff
+Record-source 1019
+Record-ctime # record creation time
+Record-mtime # record last modified time
+Record-author # record author
+Related-periodical 1026
+Report-number 1027
+Stock-number 1028
+Sequence # genetic stuff
+Sequence-Length # genetic stuff
+Subject 21
+Subject-BDI 23
+Subject-INSPEC 24
+Subject-LC 27
+Subject-LC-children 1008
+Subject-MESH 25
+Subject-PA 26
+Subject-PRECIS 45
+Subject-RAMEAU 22
+Subject-RSWK 46
+Subject-RVM 28
+Subject-local 29
+Subject-name-personal 1009
+Subject-subdivision 47
+Thematic-number 1030
+Title 4
+Title-abbreviated 43
+Title-added-title-page 37
+Title-caption 38
+Title-collective 34
+Title-cover 36
+Title-expanded 44
+Title-former 42
+Title-key 33
+Title-other-variant 41
+Title-parallel 35
+Title-running 39
+Title-series 5
+Title-spine 40
+Title-uniform 6
+
+# End if file

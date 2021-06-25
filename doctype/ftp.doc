@@ -1,0 +1,27 @@
+The FTP doctype
+
+Format:
+The FTP doctype expects files in the following format:
+
+This first line up to a \n character describe the file for searching.
+The rest of the document, this line included, can be anything, even
+a gziped tar file.
+
+The format is intended to make a free text searchable ftp site.
+
+How it works:
+
+Indexing and multiple document handling is inherited from doctype:
+i.e., this is just like any plain vanilla text file.  The present
+is where the first line vs. everything else decision is made.  A "B"
+present shows things up to the first newline character (the first line,
+in other words).  An "F" present shows everything after the first newline.
+
+Personally, if I were going to make a searchable FTP archive, I wouldn't
+use this doctype.  I'd use the gopher or filename  doctypes.  As a 
+no-extra-cost benefit, it would also be gopher-accessable.  Plus I 
+wouldn't have to edit the files by hand.  You loose the ability to
+search on the maintainer-provided description (unless you use the filename
+doctype with really hairy filenames, which isn't a bad idea) but the
+maintenance becomes so much simpler.
+

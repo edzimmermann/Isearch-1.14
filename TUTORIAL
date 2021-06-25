@@ -1,0 +1,226 @@
+A BRIEF TUTORIAL ON USING ISEARCH
+---------------------------------
+
+This document is work in progress (8/11/95).  Send comments to Nassib
+Nassar (nrn@cnidr.org).
+
+Isearch is included as part of Isite; however, Isearch is updated more
+frequently than Isite, and it is a good idea to use the latest version
+of Isearch instead of the version that comes with Isite.  The latest
+stable version of Isearch is available from ftp.cnidr.org in
+/pub/NIDR.tools/Isearch/.  Binaries for some systems may be available
+in that same directory.
+
+Following are the usage details for the Iindex and Isearch utilities.
+You can view them at any time by simply typing `Iindex' and `Isearch'
+with no options.
+
+Iindex [-d (X)]  // Use (X) as the root name for database files.
+       [-a]  // Add to existing database, instead of replacing it.
+       [-m (X)]  // Load (X) megabytes of data at a time for indexing
+                 // (default=1).
+       [-s (X)]  // Treat (X) as a separator for multiple documents within
+                 // a single file.
+       [-t (X)]  // Index as files of document type (X).
+       [-f (X)]  // Read list of file names to be indexed from file (X).
+       [-r]  // Recursively descend subdirectories.
+       [-o (X)]  // Document type specific option.
+       (X) (Y) (...)  // Index files (X), (Y), etc.
+
+Isearch [-d (X)]  // Search database with root name (X).
+        [-p (X)]  // Present element set (X) with results.
+        [-q]  // Print results and exit immediately.
+        [-and]  // Perform boolean "and" on results.
+        [-byterange]  // Print the byte range of each document within
+                      // the file that contains it.
+        [-o (X)]  // Document type specific option.
+        (X) (Y) (...)  // Search for words (X), (Y), etc.
+                       // [fieldname/]searchterm[*][:n]
+                       // Prefix with fieldname/ for fielded searching.
+                       // Append * for right truncation.
+                       // Append :n for term weighting (default=1).
+                       //   (Use negative values to lower rank.)
+
+
+SUBSCRIBING TO THE MAILING LIST
+
+There is a mailing list for discussion of Isite and Isearch.  You can
+subscribe to the list by sending an e-mail message to
+
+	listserv@vinca.cnidr.org
+
+with the body of the message being
+
+	subscribe ISITE-L FirstName LastName
+
+Be sure to use your name in place of `FirstName LastName'.  To post
+messages to the list, send them to
+
+	ISITE-L@vinca.cnidr.org
+
+If you have any questions about this list, please contact
+nrn@cnidr.org.
+
+
+INSTALLING ISEARCH
+
+In order to compile Isearch, you must have Gnu C/C++ properly
+installed.  Both gcc and the g++ library must be installed:
+
+	URL:ftp://sunsite.unc.edu/pub/gnu/development/gcc-2.6.3.tar.gz
+	URL:ftp://sunsite.unc.edu/pub/gnu/libraries/libg++-2.6.2.tar.gz
+
+To install Isearch, simply gunzip and untar, cd into the Isearch
+directory, and type
+
+	make
+
+to compile.
+
+After this step (or if you downloaded precompiled binaries) you will
+probably want to install the executables somewhere.
+
+To install the executables in `/usr/local/bin/.', type
+(as root)
+
+	make install
+
+Or, for example, to install into `/mylocal/bin/.', type
+
+	make install INSTALL=/mylocal/bin
+
+Isearch should compile cleanly and without modification under most
+UNIX platforms.
+
+
+INDEXING AND SEARCHING A SIMPLE DATABASE (-d)
+
+The simplest way to use these utilities is to index and search a 
+collection of text files (e.g., `*.txt') with the following commands:
+
+(1)	Iindex -d /db/MYDB /data/*.txt
+(2)	Isearch -d /db/MYDB computer
+
+In the first example Iindex will read all `*.txt' files in the /data/
+directory and create several database files in the /db/ directory
+beginning with `MYDB.'.  In the second example Isearch will search on
+those database files that Iindex had created and will display all
+documents that contain the word `computer'.
+
+Note that if you move or rename any of the text files you have
+indexed, you must then re-index (by running Iindex again).
+
+
+INDEXING AND SEARCHING FIELDED DATA (-t)
+
+Isearch supports field-based searching via `document types'.  A document
+type is a self-contained C++ class that defines how to index a certain
+class of fielded documents.  At present, the only document type
+distributed with Isearch is the SGMLTAG document type.  SGMLTAG is able to
+parse SGML-like files such as HTML, and it treats tag pairs as field
+delimiters. 
+
+For example, to index HTML files using the SGMLTAG document type,
+
+	Iindex -d WEBPAGES -t SGMLTAG *.html
+
+The `-t' option tells Iindex to use the SGMLTAG document type, to treat
+the files it indexes as SGML-like tagged data.  For example, to search the
+WEBPAGES database for the word `music' in the `title' field,
+
+	Isearch -d WEBPAGES title/music
+
+Isearch will display all the indexed documents that contain the word
+`music' between `title' and `/title' tags.  Note that field names and
+search terms are not case-sensitive, which means that all of the following
+would behave identically: 
+
+	Isearch -d WEBPAGES title/Music
+	Isearch -d WEBPAGES Title/MUSIC
+	Isearch -d WEBPAGES TITLE/music
+
+Document type names are also not case-sensitive; so that `-t sgmltag'
+is equivalent to `-t SGMLTAG'.
+
+
+INDEXING FILES CONTAINING MULTIPLE DOCUMENTS (-s)
+
+Iindex allows you to have many documents per file.  Typically each
+document is separated by the others with a `separator string'.  The
+separator might be a line of dashes (e.g., `-----') or any other string
+you choose.  The `-s' option lets you tell Iindex what the separator
+string is in the files you are indexing.  For example,
+
+	Iindex -d ARTICLES -s "###" *.txt
+
+will treat all occurrences of the string `###' as a delimiter of two
+different documents within the same `.txt' file.  For example, a file 
+containing
+
+	sample text 1
+	abcde
+	### sample text 2
+	fghij
+	### sample text 3
+	klmno
+
+would be interpreted by Iindex as three separate documents, the second two
+beginning with `###'. 
+
+It is not always necessary to use the quotation marks when specifying the
+separator string after `-s', but it is a good habit, since some characters
+you might be using in the separator may be special commands to the system
+shell (e.g., `>'). 
+
+
+SPEEDING UP INDEXING BY USING MORE MEMORY (-m)
+
+By default, Iindex reads and indexes 1 MB of text at a time.  If the
+text exceeds that amount, Iindex must save parts of the index to disk
+and merge each part into the final index.  If you have enough memory
+on your system, you can tell Iindex to read more than 1 MB of text at
+a time.  For example,
+
+	Iindex -d MYDB -m 3 *.txt
+
+will read and index the text in 3 MB blocks.  The ideal case is to set
+the `-m' option to a value larger than the amount of text you have to
+index.  (So, if you are indexing 1500 KB of text, use `-m 2'.)
+However, in most cases there is not enough memory to hold the entire
+collection.  Iindex may actually use much more memory than what you
+specify with `-m', depending on a wide range of data-specific
+variables.  The `-m' option specifies the amount of data to load, not
+the total amount of memory to use.
+
+
+INDEXING A LIST OF FILES (-f)
+
+Iindex lets you specify a list of files that you want to index.  For
+example,
+
+	Iindex -d MYDB -f filelist
+
+will expect the file `filelist' to be a text listing of file names
+that refer to the files you want to index.
+
+
+INDEXING FILES RECURSIVELY IN SUBDIRECTORIES (-r)
+
+Iindex can recursively descend subdirectories as it searches for files
+to index.  For example,
+
+	Iindex -d MYDB -r ~/doc/
+
+will index all files located below the directory `~/doc/'.  Note that
+when using `-r' the file specifications at the end of the line are
+taken to be directories that should be searched recursively.
+Specifying a mask with `-r', for example,
+
+	Iindex -d WEBPAGES -t SGMLTAG -r /webdata/*.html
+					   (Incorrect!)
+
+is incorrect unless you actually have directory names ending in
+`.html'!  The correct way to recursively index your web site is
+
+	find /webdata/ -name "*.html" -print >tmpfile
+	Iindex -d WEBPAGES -t SGMLTAG -f tmpfile

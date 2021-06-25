@@ -1,0 +1,13 @@
+# Generated automatically from Makefile.all.in by configure.
+SHELL=/bin/sh
+
+all:
+	cd $(DOCTYPE_DIR)
+	$(MAKE) "CC=$(CC)" "CFLAGS=$(CFLAGS)"
+	cd ..
+	cd $(SRC_DIR)
+	$(MAKE) "BIN_DIR=..\$(BIN_DIR)" \
+			"DOCTYPE_DIR=../$(DOCTYPE_DIR)" \
+			"CFLAGS=$(CFLAGS)" "CC=$(CC)" \
+			"DOCLIB=$(DOCLIB)" "LDFLAGS=$(LDFLAGS)"
+	cd ..

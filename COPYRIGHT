@@ -1,0 +1,256 @@
+/************************************************************************
+Copyright Notice
+
+Copyright (c) MCNC, Clearinghouse for Networked Information Discovery and
+Retrieval, 1995. 
+
+Permission to use, copy, modify, distribute, and sell this software and
+its documentation, in whole or in part, for any purpose is hereby granted
+without fee, provided that
+
+1. The above copyright notice and this permission notice appear in all
+copies of the software and related documentation. Notices of copyright
+and/or attribution which appear at the beginning of any file included in
+this distribution must remain intact. 
+
+2. Users of this software agree to make their best efforts (a) to return
+to MCNC any improvements or extensions that they make, so that these may
+be included in future releases; and (b) to inform MCNC/CNIDR of noteworthy
+uses of this software. 
+
+3. The names of MCNC and Clearinghouse for Networked Information Discovery
+and Retrieval may not be used in any advertising or publicity relating to
+the software without the specific, prior written permission of MCNC/CNIDR. 
+
+THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND,
+EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY WARRANTY
+OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+
+IN NO EVENT SHALL MCNC/CNIDR BE LIABLE FOR ANY SPECIAL, INCIDENTAL,
+INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER
+RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER OR NOT ADVISED OF THE
+POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF LIABILITY, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. 
+************************************************************************/
+
+--------------------------------------------------------------------------
+This material is based on work sponsored by the National Science
+Foundation under Cooperative Agreement No. NCR-9216963.  The Government
+has certain rights in this material. 
+
+Any opinions, findings and conclusions or recommendations expressed in
+this publication are those of the author(s) and do not necessarily reflect
+the views of the National Science Foundation.
+--------------------------------------------------------------------------
+
+
+The BER utilities are subject to the following copyright:
+
+/*
+(c)1992 OCLC Online Computer Library Center, Inc., 6565 Frantz Road, Dublin,
+
+Ohio 43017-0702.  OCLC is a registered trademark of OCLC Online Computer
+
+Library Center, Inc.
+
+
+NOTICE TO USERS:  The BER Utilities ("Software") has been developed by OCLC
+
+Online Computer Library Center, Inc.  Subject to the terms and conditions set
+
+forth below, OCLC grants to user a perpetual, non-exclusive, royalty-free
+
+license to use, reproduce, alter, modify, and create derivative works from
+
+Software, and to sublicense Software subject to the following terms and
+
+conditions:
+
+
+
+SOFTWARE IS PROVIDED AS IS.  OCLC MAKES NO WARRANTIES, REPRESENTATIONS, OR
+
+GUARANTEES WHETHER EXPRESS OR IMPLIED REGARDING SOFTWARE, ITS FITNESS FOR ANY
+
+PARTICULAR PURPOSE, OR THE ACCURACY OF THE INFORMATION CONTAINED THEREIN.
+
+
+
+User agrees that OCLC shall have no liability to user arising therefrom,
+
+regardless of the basis of the action, including liability for special,
+
+consequential, exemplary, or incidental damages, including lost profits,
+
+even if it has been advised of the possibility thereof.
+
+
+
+User shall cause the copyright notice of OCLC to appear on all copies of
+
+Software, including derivative works made therefrom.
+
+*/
+
+
+The MARC utilities are subject to the following copyright:
+
+/*
+ * Copyright (c) 1992 The Regents of the University of California.
+ * All rights reserved.
+ *
+ * Author:	Ray Larson, ray@sherlock.berkeley.edu
+ *		School of Library and Information Studies, UC Berkeley
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *	This product includes software developed by the University of
+ *	California, Berkeley.
+ * 4. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND THE AUTHOR ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+
+
+Document types developed by BSn are subject to the following copyright:
+
+Copyright (c) 1994,1995 Basis Systeme netzwerk, Munich
+              Brecherspitzstr. 8
+              D-81541 Munich, Germany
+
+              ISRCH-LIC-1B EXPORT: Tue Aug 15 14:20:42 MET DST 1995
+
+              Public Software License Agreement:
+              ----------------------------------
+
+Basis Systeme netzwerk(*) (herein after referred to as BSn) hereby
+provides COMPANY (herein after referred to as "Licensee") with a
+non-exclusive, royalty-free, worldwide license to use, reproduce,
+modify and redistribute this software and its documentation (hereafter
+referred to as "Materials"), in whole or in part, with Licensee's
+products under the following conditions:
+
+1. All copyrights and restrictions in the source files of the Software
+Materials will be honored.
+
+2. The above copyright notice and this permission notice appear in all
+copies of the software and related documentation. Notices of copyright
+and/or attribution which appear at the beginning of any file included
+in this distribution must remain intact.
+
+3. The origin of these Materials will be explicitly stated in Licensee's
+accompanying documentation as developed by Basis Systeme netzwerk (BSn)
+and its collaborators.
+
+4. The name of the author(s) or BSn may not be used to endorse or promote
+products derived from these Materials without specific prior written
+permission.
+
+5. Versions of the Software Materials or documentation that are altered
+or changed will be marked as such.
+
+6. Licensee shall make reasonable efforts to provide BSn with all
+enhancements and modifications made by Licensee to the Software
+Materials, for a period of three years from the date of execution of
+this License. BSn shall have the right to use and/or redistribute the
+modifications and enhancements without accounting to Licensee.
+
+Enhancements and Modifications shall be defined as follows:
+    i) Changes to the source code, support files or documentation.
+   ii) Documentation directly related to Licensee's distribution of the
+       software.
+  iii) Licensee software modules that actively solicit services from
+       the software and accompanying user documentation.
+
+7. Users of this software agree to make their best efforts to inform
+BSn of noteworthy uses of this software.
+
+8. You agree that neither you, nor your customers, intend to, or will,
+export these Materials to any country which such export or transmission
+is restricted by applicable law without prior written consent of the
+appropriate government agency with jurisdiction over such export or
+transmission.
+
+8. BSn makes no representation on the suitability of the Software
+Materials for any purpose.  The SOFTWARE IS PROVIDED "AS IS" AND
+WITHOUT EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.
+
+9. Licensee agrees to indemnify, defend and hold harmless BSn from any
+loss, claim, damage or liability of any kind, including attorney's fees
+and court costs, arising out of or in connection with any use of the
+Materials under this License.
+
+10. In no event shall BSn be liable to Licensee or third parties
+licensed by licensee for any indirect, special, incidental, or
+consequential damages (including lost profits).
+
+11. BSn has no knowledge of any conditions that would impair its right
+to license the Materials.  Notwithstanding the foregoing, BSn does
+not make any warranties or representations that the Materials are
+free of claims by third parties of patent, copyright infringement
+or the like, nor does BSn assume any liability in respect of any
+such infringement of rights of third parties due to Licensee operation
+under this license.
+
+12. IN NO EVENT SHALL BSN OR THE AUTHORS BE LIABLE FOR ANY SPECIAL,
+INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY
+DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
+OR NOT ADVISED OF THE POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF
+LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+OF THIS SOFTWARE.
+
+13. The place of execution of this agreement is Munich and the applicable
+laws are those of the Federal Republic of Germany. The agreement also
+remains in force even in states/jurisdictions that exclude one or more
+clauses. For these cases the applicable clauses are to be replaced by
+other agreements that come as close as possible to the original intent.
+
+"Diese Vereinbarung unterliegt dem Recht der Bundesrepublik Deutschland.
+Sie enthaelt saemtliche Vereinbarungen, welche die Parteien hinsichtlich
+des Vereinbarungsgegenstandes getroffen haben, und ersetzt alle
+vorhergehenden muendlichen oder schriftlichen Abreden. Diese Vereinbarung
+bleibt in Zweifel auch bei rechtlicher Unwirksamkeit enzelner Bestimmungen
+in seinen uebrigen Teilen verbindlich. Unwirksame Bestimmungen sind
+durch Regulungen zu ersetzen, die dem angestrebten Erfolg moeglichst nahe
+kommen."
+
+Signed:_________________________________     Date:_________
+
+Name:   _____________________________ ______________________________________
+
+Position: __________________________________________________________________
+
+Company: ___________________________________________________________________
+
+Address: ___________________________________________________________________
+
+         State:_______________           Country:___________________________
+
+Telephone Number:___________________________________________________________
+
+
+___________________________________________________________________________________
+(*)Basis Systeme netzwerk, Brecherspitzstr. 8, 81541 Muenchen, Germany 
+   email: info@bsn.com                      WWW: http://www.bsn.com/BSn

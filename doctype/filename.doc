@@ -1,0 +1,35 @@
+The FILENAME doctype
+
+Format:  Here's a no-brainer:  The format of a FILENAME document is
+the filename.  Here's an example.  Given a file named "animals"
+that contains the following text:
+
+cat dog
+pig sheep
+
+
+If you search for "cat", "dog", "pig", or "sheep", then you won't
+find a thing.  No hits.  But if you search for "animals" then you
+will get a hit on this file.  The "B" element set (for headlines)
+will return "animals" (the name of the file, get it?) and the "F"
+element set will present the byte-by-bye contents of the file.
+
+Note:  if you need a search for "cat" to hit this document but you still
+want filename-based presents, then use the "gopher" doctype and ignore
+all the stuff about .cap directories.
+
+How we do it (you're going to love this): We cheat.
+Isearch cannot index text that it can't get a file pointer to.  It's
+more or less a basic limitation of PAT arrays as a data type. So
+given a file named "myFileName", we create a file named "myFileName.fn".
+Into this file we write the string "myFileName" (the original name
+of the file).  During indexing we just "change" the name of the file
+to be indexed, and poof!  We'e fooled it.  During a "F" present we
+have to fix the name back, but it isn't a big deal.
+
+OK, to be fair, PAT arrays *could* handle the problem, but the step where you
+probe into the collection would become rather tricky.  If you used signed
+offsets then you could say that negative offsets point to meta-text, but 
+either the sorting of pointers or the calculation of offsets would get tricky.
+Suffice it to say that the fake filename approach is ugly but effective.
+

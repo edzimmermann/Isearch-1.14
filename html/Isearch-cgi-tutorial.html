@@ -1,0 +1,278 @@
+<!doctype html public "-//IETF//DTD HTML//EN">
+<HTML>
+
+<HEAD>
+
+<TITLE>Building, Configuring, and Using Isearch-cgi</TITLE>
+
+<META NAME="GENERATOR" CONTENT="Internet Assistant for Word 0.95">
+<META NAME="AUTHOR" CONTENT="Archibald Warnock">
+<META NAME="OPERATOR" CONTENT="Archibald Warnock">
+</HEAD>
+
+<BODY BGCOLOR="FFFFFF" TEXT="000000" LINK="0000FF" VLINK="B60000" ALINK="66D15E">
+<H1>Building, Configuring, and Using Isearch-cgi</H1>
+<h2>Erik Scott, Scott Technologies, Inc.</h2>
+<P>
+Isearch-cgi is an add-on for Isearch.  Isearch-cgi lets you do
+all the cool stuff that Isearch does, only you can do it from
+a page on the World Wide Web.  This means your textbase can be
+accessed by anyone in the world who has a web browser (and these
+days, that's pretty much everyone).
+<P>
+It's important to understand that Isearch-cgi is almost useless
+by itself.  You have to have already installed Isearch.  This
+document will describe Isearch-cgi version 1.04.  To use this
+version, you'll have to have Isearch version 1.13 or later
+installed.
+<H2>INSTALLATION:</H2>
+
+<P>
+To install Isearch-cgi requires that you have already gotten and
+built Isearch.  If you haven't, get it now, build it, and learn
+to use it.  The Isearch package is available for anonymous ftp
+from ftp.cnidr.org in the directory /pub/NIDR.tools/Isearch.
+<P>
+From this point on, we're going to make some assumptions:
+<OL>
+<LI>You have Isearch, and it's installed as /local/project/Isearch-1.13
+<LI>You know how to use (at least) Isearch and Iindex
+<LI>You already have NCSA's httpd installed (a &quot;web server&quot;)
+<LI>You pretty much just took the defaults when you installed
+httpd, like placing your .html files in /usr/local/etc/httpd/htdocs.
+</OL>
+
+<P>
+Note that if you're using one of Netscape's web servers, these
+instructions will probably be close, but not quite precisely correct.
+ You were warned.
+<P>
+So, let's get Isearch-cgi:
+<PRE>
+sti-gw% ftp ftp.cnidr.org
+Connected to kudzu.cnidr.org.
+220 kudzu FTP server (Version wu-2.4(1) Sun Jan 1 17:43:49 EST 1995) ready.
+Name (ftp.cnidr.org:escott): anonymous
+331 Guest login ok, send your complete e-mail address as password.
+Password:
+230- Welcome to kudzu.cnidr.org
+230- 
+230- ftp logged in from sti-gw.sti-ext.com at Thu May  2 22:57:30 1996
+230- 
+230- There are currently 20 users of the maximum 25 logged on.
+230- 
+230- If you have trouble using this experimental FTP client, try including
+230- a dash in front of your username (as your login password).  This will
+230- disable informational messages such as these.
+230- 
+230- Comments???  Send mail to `bmv@k12.cnidr.org`
+230-
+230-
+230 Guest login ok, access restrictions apply.
+ftp&gt; cd /pub/NIDR.tools/Isearch-cgi
+250-Please read the file README
+250-  it was last modified on Thu Feb  1 15:44:18 1996 - 91 days ago
+250 CWD command successful.
+ftp&gt; binary
+200 Type set to I.
+ftp&gt; get Isearch-cgi-1.03.tar.Z
+200 PORT command successful.
+150 Opening BINARY mode data connection for Isearch-cgi-1.03.tar.Z (22896 
+bytes).
+226 Transfer complete.
+local: Isearch-cgi-1.03.tar.Z remote: Isearch-cgi-1.03.tar.Z
+22896 bytes received in 9 seconds (2.5 Kbytes/s)
+ftp&gt; quit
+221 Goodbye.
+</PRE>
+
+<P>
+What we just did was this:  used ftp to connect to ftp.cnidr.org,
+logged in as &quot;anonymous&quot;, typed our email address for
+a password (which of course didn't show up here), and changed
+directories to where Isearch-cgi is kept.  Then we made sure we
+were using &quot;binary&quot; mode, and we got the distribution.
+<P>
+Now we need to uncompress the distribution:
+<PRE>
+sti-gw% uncompress Isearch-cgi-1.03.tar.Z
+</PRE>
+
+<P>
+This creates a file named &quot;Isearch-cgi-1.03.tar&quot;.  Now,
+we'll move that tar file to a good place to work from:
+<PRE>
+sti-gw% mv Isearch-cgi-1.03.tar /local/project
+sti-gw% cd /local/project
+</PRE>
+
+<P>
+Finally (for now) we'll unpack that tar file:
+<PRE>
+sti-gw% tar xf Isearch-cgi-1.03.tar
+sti-gw% cd Isearch-cgi-1.03
+</PRE>
+
+<P>
+We're now ready to start the main part of building Isearch-cgi.
+<P>
+The first thing to do is to edit the file &quot;Makefile&quot;.
+ This file contains configuration information that Isearch-cgi
+needs in order to find Isearch and the cgi-bin directory that
+your web server is using.  Basically, load the Makefile in your
+favorite editor and follow the directions.  At one point, you'll
+see a line that says &quot;That's all!  Type 'make'&quot;.  Don't
+edit below that line unless you really know what you're doing.
+<P>
+Now it's time to type &quot;make&quot;.  Don't be surprised if
+the compiler prints some warnings:  no one is perfect.  If all
+goes well, the Makefile will print:
+<PRE>
+Welcome to CNIDR Isearch-cgi!
+</PRE>
+
+<P>
+Read the README file for configuration and installation instructions
+<P>
+Which is pretty sound advice, even if you're armed with this guide,
+since small details change from time to time.
+<P>
+At this point, you have built &quot;isrch_fetch&quot;, &quot;isrch_srch&quot;,
+and &quot;search_form&quot;.  You'll need to build two shell scripts
+now, and you'll do it with the &quot;Configure&quot; script provided.
+ Configure will need one argument, the directory where your Isearch
+indexes are stored.  The Isearch indexes are the files created
+when you run Iindex, and the name was set by the &quot;-d&quot;
+option to Iindex.  We're going to assume you have an index named
+&quot;tester&quot; in the directory &quot;/local/project/Isearch-1.13/&quot;:
+<PRE>
+sti-gw% Configure /local/project/Isearch-1.13
+</PRE>
+
+<P>
+That created the scripts &quot;isearch&quot; and &quot;ifetch&quot;.
+Copy these two scripts to wherever you put your cgi-bin applications.
+ This will quite likely be /usr/local/etc/httpd/htdocs/cgi-bin.
+ 
+<P>
+Now, following the outline of the README, we'll take a moment
+to make an index to some intersting files:
+<PRE>
+sti-gw% cd /local/project/Isearch-1.13
+sti-gw% cd bin
+sti-gw% Iindex -d /local/project/Isearch-1.13/tester -t sgmltag /etc/motd
+</PRE>
+
+<P>
+That made a searchable index of the login banner.  Boring example,
+yes, but one that anyone can handle.
+<P>
+The one remaining step is to make a web page that contains the
+buttons and text fields and so forth we need to actually do the
+searching.  The program &quot;search_form&quot; will do that for
+us.  Here's a simple example:
+<PRE>
+sti-gw% search_form /local/project/Isearch-1.13 tester &gt; form.html
+</PRE>
+
+<P>
+This creates a form named &quot;form.html&quot; that knows to
+use the &quot;tester&quot; textbase in the &quot;/local/project/Isearch-1.13&quot;
+directory.  Copy form.html to your httpd document directory (probably
+/usr/local/etc/httpd/htdocs).
+<P>
+Now point your favorite web browser at that page (probably you'll
+use a URL like http://myhost.mydomain.com/form.html).  You should
+see a form with blanks to fill in for search terms and a button
+that says &quot;Submit Query&quot;.  When you click on that button,
+the query will run and you'll get your search results.  By default,
+the page you get will have brief &quot;headlines&quot; for the
+matching documents, and you'll be given links to click on to see
+the full document if you want to.
+<P>
+There is a chance that you will see a message in your web browser
+after searching that says something to the effect that it can't
+read &quot;/cgi-bin/isearch&quot;.  If this happens, check the
+entry for &quot;ScriptAlias&quot; in srm.conf, probably as /usr/local/etc/httpd/conf/srm.conf.
+ Make sure it contains the fully qualified path name to your cgi-bin
+directory.
+<P>
+That's pretty much the whole game, the rest is just details.
+<H2>DETAILS</H2>
+
+<P>
+As promised, here's the rest of the story.
+<H3>More Advanced Search Forms:</H3>
+
+<P>
+First, the simple search page, form.html, that we created above
+is really simple.  It allows you to enter three search terms,
+and they'll all be &quot;or&quot;-ed together at search time.
+ Not all that wonderful.  No wonder it's called a &quot;simple&quot;
+search form.  Fortunately, there are two other kinds of search
+forms, &quot;boolean&quot; and &quot;advanced&quot;.
+<P>
+A Boolean search form lets you specify two search terms and whether
+they are &quot;and&quot;-ed, &quot;or&quot;-ed, or &quot;andnot&quot;-ed.
+ To generate that kind of form, use the &quot;-boolean&quot; option
+to search_form:
+<PRE>
+sti-gw% search_form -boolean /local/project/Isearch-1.13 tester &gt;form2.html
+</PRE>
+
+<P>
+You can also create an advanced search form.  This allows you
+to type free-form, infix boolean queries, like &quot;((cheese
+and wine) or caviar) andnot sherry&quot;.  To generate this kind
+of page, use:
+<PRE>
+sti-gw% search_form -advanced /local/project/Isearch-1.13 tester &gt;form3.html
+</PRE>
+
+<H3>Better Looking Forms:</H3>
+
+<P>
+The search forms that are generated are pretty plain.  You'll
+probably want to add button bars and pictures of your company
+headquarters and so forth.  Feel free.  Go nuts.
+<P>
+The search results page is generated by the code in isrch_srch.cxx.
+ Look at the &quot;cout&quot; statements and get a feel for what
+is going on, and then hack away.  You can make the output as simple
+or as fancy as you'd like.  You can have a little Java animation
+of yourself pointing at your favorite document when it gets found,
+for instance.  Or color code the hits, red for the highest score
+through purple to blue for the lowest.  Again, go nuts.
+<H3>Fast, Clean Links:</H3>
+
+<P>
+You can also modify the search form so that fetches aren't done
+through ifetch, but go straight to the html files that were indexed.
+ This assumes, of course, that the files you indexed were part
+of your normal htdocs tree.  If not, you're out of luck.  But
+if you just indexed your web site, add the line:
+<PRE>
+&lt;input name=&quot;HTTP_PATH&quot; type=hidden value=&quot;/path/to/http/docs&quot;&gt;
+</PRE>
+
+<P>
+to your search form (like form3.html, above, for instance).  Make
+sure you edit the pathname, though.  This technique will make
+the Isearch-cgi results point to the real files instead of always
+going through ifetch.  This is good for two reasons:
+<OL>
+<LI>It protects the integrity of the link.  This is nice from
+a philosophical standpoint.
+<LI>It is much faster and places much less load on your server.
+ This is nice from a job security standpoint.
+</OL>
+
+<P>
+That concludes the Isearch-cgi Users' Guide.  Make sure you subscribe
+to the Isite mailing list for the most current information.  The
+directions for doing this are in the file &quot;README&quot;.
+ I won't repeat them here because they might very well change
+in the near future.
+</BODY>
+
+</HTML>

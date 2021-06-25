@@ -1,0 +1,69 @@
+Package name:     Isearch
+Version number:   1.14
+Original author:  Nassib Nassar <nrn@cnidr.org>
+Original URL:     http://vinca.cnidr.org/software/Isearch/Isearch.html
+HP-UX URL:        http://hpux.connect.org.uk/hppd/cgi-bin/search?package=&term=Isearch-
+Install tree:     /opt/Isearch
+Report bugs to:   stephie@connect.org.uk
+Tested on:        HP 9000/780/C160 running HP-UX 11.00
+C compiler used:  Version A.11.01.02
+Purpose:
+A command-line indexer and search engine. Isearch is a software system for
+searching though large amounts of text. The system allows a user to very
+quickly find out what documents are available that contain certain words.
+Date archived:    Wed 26 Jan 2000
+
+-------------------------------------------------------------------------------
+
+System:
+======
+	HP-UX shin B.10.20 A 9000/780
+
+URL:
+====
+	ftp://sunsite.unc.edu/pub/Linux/apps/graphics/morph/
+
+HP Porting Changes:
+===================
+
+  Configuration Files ->  Makefile - added HP paths.
+
+
+
+Building:
+=========
+
+  Run "configure" || "xmkmf" to re-generate the Makefiles. 
+
+  Run "make" in the top level dir.
+
+  Use "make -n install" to check the defaults, then "make install"
+
+
+Running:
+========
+
+  Load up the start and finish images i.e. .tga or warp sequence files, 
+  and select Morph sequence.
+
+	% xmorph -start alf.tga -finish cap.tga &
+
+  you could even to rewarp the result...
+
+	%xmorph -start warp0004 -finish warp0017 &
+
+
+
+Installed:
+==========
+ By
+ --     [steff@csc.liv.ac.uk]
+ On
+ --	[Thu 19 Nov 1998]
+ 
+
+        Version Upgrade + HPUX-11 Re-build [Fri Oct 15 1999]
+
+
+       HPUX Porting and Archive Centre, Connect, Liverpool University.
+  __/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/__/

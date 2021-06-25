@@ -1,0 +1,50 @@
+#
+# This file contains a list of the Document Types you want to compile into
+# Isearch.  For each Document Type give the stem of the file name.  For 
+# example, for SGMLTAG:
+#
+# 	sgmltag   # tells Isearch to use sgmltag.hxx and sgmltag.cxx
+#
+# You can comment out any Document Types you don't need by placing a "#"
+# character at the beginning of the line.
+#
+# Once you have made any needed modifications to this file, type "make" in
+# this directory to compile and execute dtconf, which will adjust the Isearch
+# Makefile according to which Document Types you wanted to include.
+#
+
+simple		# Simple example of a document type that displays the first
+		# x lines of text in the document.  The value of x can be
+		# set during searching with -o lines=[x], and the default
+		# is 1.
+
+# Developed by Kevin Gamiel of CNIDR
+#sgmltag	# SGML-like tagged text - use SGMLNORM instead
+
+# Developed by Edward Zimmermann of BSn
+firstline	# Firstline is searchable headline
+colondoc	# Colon-tag documents
+iafadoc  	# IAFA FTP publication docs -- requires colondoc
+mailfolder	# Unix Mail folders
+referbib	# Refer Bib databases
+irlist  	# IRLIST digests -- requires mailfolder
+listdigest	# Listserver mail digests -- requires mailfolder
+maildigest	# Standard Internet mail digests -- requires mailfolder
+medline  	# Medline-type records
+filmline	# BSn/JFF Filmline v 1.x -- requires Medline
+memodoc  	# Special Memo documents
+sgmlnorm 	# Tag and entity normalized SGML
+html     	# WWW HTML (0.9 -- 3.0 DTD) -- requires sgmlnorm
+
+# Developed by Erik Scott of Scott Technologies Inc.
+oneline		# one line per doc, like a phonebook
+para		# paragraphs ending in "\n\n"
+filename	# use the filename as the indexed text, present orig file
+ftp		# present either first line only or rest of doc only
+emacsinfo	# file with File: markers, GNU-style info files
+gopher		# present the headline based on .cap file contents if avail
+bibtex		# index BibTEX files and treat "author = " as a search field
+usmarc		# index USMARC formatted records
+
+# Developed by Archie Warnock (warnock@clark.net)
+dif		# Global Change Master Directory DIF format

@@ -1,0 +1,30 @@
+The EMACSINFO doctype
+
+
+Format:
+
+The EMACSINFO doctype expects files of the following format:
+
+File: filename Node: nodename
+This is some text associated with the above File: and Node: names
+This is another line
+File: newFilename Node: newNodeName
+This is the next record and contains text associated with the new File
+and Node names.
+
+We use the "File:" tag to indicate the start of a section, and we assume
+a section runs either to the next starting point or to the end of the
+file.
+
+We mark the "File:" and "Node:" contents as the "file" and "node" fields,
+respectively.  Thus you can search for "node/Bugs" if you want to.
+
+The present method can show either the File: and Node: line of a record,
+or it can show the entire record.  We've elected to show the entire File:
+line, but this is somewhat arbitrary.  If you're indexing things like
+the gcc compiler help then the File: lines can be mighty long, but
+they contain a lot of important information.  Again, if this proves to
+be a big problem, let us know.  It's easy to make a "file" only and "node"
+only present if you really want that.
+
+

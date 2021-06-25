@@ -1,0 +1,54 @@
+#
+# Compiler and Compiler flags
+#
+
+!IFDEF WIN32
+!include <ntwin32.mak>
+CFLAGS=$(cflags) $(cvarsmt) $(cdebug) -Dstrcasecmp=stricmp -Dstrncasecmp=strnicmp -DNO_MMAP -DUNISOCK_WINSOCK
+!ELSE
+CFLAGS=-Alfw -F 4000 -G3 -Oceglot -W3 -Zi -DFAR=_far -Dstrcasecmp=stricmp -Dstrncasecmp=strnicmp -DNO_MMAP -DUNISOCK_WINSOCK
+!ENDIF
+
+#
+# Source Files Directory
+#
+# Where are search engine sources located?
+#
+SRC_DIR=../src
+
+# 
+# That should be all you need to configure
+#
+
+OBJ= dtconf.obj
+
+H=
+
+INC= 
+
+RM= del
+
+all: $(OBJ) dtconf.exe ../src/dtreg.hxx
+
+../src/dtreg.hxx: dtconf.inf
+	dtconf.exe
+
+dtconf.obj:$(H) dtconf.cxx
+	$(CC) $(CFLAGS) $(INC) -c dtconf.cxx
+
+dtconf.exe:$(OBJ) dtconf.cxx
+!IFDEF WIN32
+	$(link) $(conlflags) $(ldebug) -out:dtconf.exe $(OBJ) $(conlibsmt)
+!ELSE
+	$(CC) $(CFLAGS) -o dtconf.exe $(OBJ)
+!ENDIF
+	dtconf.exe
+
+clean:
+	$(RM) *.obj
+	$(RM) dtconf.exe
+	$(RM) ..\src\dtreg.hxx
+
+build:
+	$(MAKE) -i clean
+	$(MAKE) all

@@ -1,0 +1,1031 @@
+<!doctype html public "-//IETF//DTD HTML//EN">
+<HTML>
+
+<HEAD>
+
+<TITLE>ISEARCH TUTORIAL</TITLE>
+
+<META NAME="GENERATOR" CONTENT="Internet Assistant for Word 0.95">
+<META NAME="AUTHOR" CONTENT="Archibald Warnock">
+<META NAME="OPERATOR" CONTENT="Archibald Warnock">
+</HEAD>
+
+<BODY BGCOLOR="FFFFFF" TEXT="000000" LINK="0000FF" VLINK="B60000" ALINK="66D15E">
+<H1>ISEARCH TUTORIAL</H1>
+
+<H2>The Complete Guide to Using and Configuring the CNIDR Isearch
+System with Examples, Advice, and Editorial Comment</H2>
+<h2>Erik Scott, Scott Technologies, Inc.</h2>
+
+<P>
+In the beginning, there was &quot;grep&quot;.
+<P>
+Grep was good, but it lacked subtlety.  It lacked speed.  And
+while grep was cheap and hence widely used, it wasn't a text searching
+system.
+<P>
+It wasn't even a text searching program.
+<P>
+It was a regular expression matching program.  It didn't sort
+or rank or try to get along well with others.
+<P>
+So the computer scientists of the world created Information Retrieval.
+ It wasn't a product, it was a subject.  They wrote many papers.
+<P>
+From the Information Retrieval people (who now called themselves
+&quot;IR&quot; so their colleagues would think they were developing
+remote controls for Tvs) came text search systems.  Systems such
+as &quot;SMART&quot;. Systems such as &quot;WAIS&quot;.
+<P>
+WAIS was written by a guy who worked for a supercomputer company.
+He wanted to create an application for those big, hulking machines.
+ He gave away a watered-down version of his program so people
+would see how nice a full-strength version of it would be on big,
+hulking machines. The supercomputer company that he worked for
+was going bankrupt, so he took his WAIS and he started his own
+company to sell WAIS.
+<P>
+The National Science Foundation saw hope in the free version of
+WAIS, so they worked with MCNC (it doesn't stand for anything,
+they're just MCNC) to create CNIDR (and it does stand for something:
+Truth, Justice, and the... no, actually, it used to stand for
+the Clearinghouse for Networked Information Discovery and Retrieval,
+but lately they've changed the &quot;Clearinghouse&quot; to &quot;Center&quot;
+since that's easier to type with one hand).  CNIDR begat freeWAIS,
+which was the old, free WAIS (hence the name) with a series of
+enhancements.
+<P>
+But freeWAIS had problems.  At its heart was the crippled stump
+of a search system.  Small desktop machines had caught up with
+the old, hulking machines, but freeWAIS still only handled small
+collections.  CNIDR said, &quot;This sucks.&quot;  I know, I heard
+them.  So they created a new text search system from the ground
+up.  And they called it Isite.  Isearch is the part of Isite that
+actually does the searching.
+<P>
+And it was good.<HR>
+
+<H1>ISEARCH TUTORIAL TABLE OF CONTENTS</H1>
+
+<table>
+<tr>
+  <td><a href="#ch1">1.</a></td><td> A Quick Example of Isearch Use</td>
+</tr>
+<tr>
+<td><a href="#ch2">2.</a></td><td> Indexing Collections</td>
+</tr>
+<tr>
+   <td><a href="#ch2-1">2.1</a></td><td> Arranging the Text</td>
+</tr>
+<tr>
+   <td><a href="#ch2-2">2.2</a></td><td> Running the Indexer</td>
+</tr>
+<tr>
+   <td><a href="#ch2-3">2.3</a></td><td> Deciding on Doctypes</td>
+</tr>
+<tr>
+<td><a href="#ch3">3.</a></td><td> Searching</td>
+</tr>
+<tr>
+   <td><a href="#ch3-1">3.1</a></td><td> Simple Searches</td>
+</tr>
+<tr>
+  <td><a href="#ch3-2"> 3.2</a></td><td> Searching in Subfields</td>
+</tr>
+<tr>
+  <td><a href="#ch3-3"> 3.3</a></td><td> Boolean Searches</td>
+</tr>
+<tr>
+  <td><a href="#ch3-4"> 3.4</a></td><td> Notes on Ranking</td>
+</tr>
+<tr>
+  <td><a href="#ch3-5"> 3.5</a></td><td> Wildcards</td>
+</tr>
+<tr>
+  <td><a href="#ch3-6"> 3.6</a></td><td> Prefixes and Suffixes</td>
+</tr>
+<tr>
+<td><a href="#ch4">4.</a></td><td> Maintaining Your Data</td>
+</tr>
+<tr>
+  <td><a href="#ch4-1"> 4.1</a></td><td> Removing old Files</td>
+</tr>
+<tr>
+  <td><a href="#ch4-2"> 4.2</a></td><td> Adding new Files</td>
+</tr>
+<tr>
+  <td><a href="#ch4-3"> 4.3</a></td><td> Moving Files Around</td>
+</tr>
+<tr>
+  <td><a href="#ch4-4"> 4.4</a></td><td> Viewing Information</td>
+</tr>
+<tr>
+<td><a href="#ch5">5.</a></td><td> Performance Issues</td>
+</tr>
+<tr>
+  <td><a href="#ch5-1"> 5.1</a></td><td> Location of Files for Speed.</td>
+</tr>
+<tr>
+  <td><a href="#ch5-2"> 5.2</a></td><td> How Much RAM is Enough?</td>
+</tr>
+<tr>
+  <td><a href="#ch5-3"> 5.3</a></td><td> CPU Load vs. User Skill</td>
+</tr>
+</table>
+
+<HR>
+
+<a name="ch1">
+<H1>1. A Quick Example of Isearch Use.</H1>
+</a>
+
+<P>
+This section assumes that Isearch has already been installed.
+ We'll assume that Isearch has been installed in the directory
+/local/project/Isearch-1.09.09.  Naturally, that name will change
+depending on the version number and the preferences of your site,
+so remember to substitute your own directory name.  If you haven't
+installed Isearch yet, see the file &quot;QuickStart&quot; in
+the Isearch documentation directory.
+<P>
+In this example, we'll index two text files from the Isearch distribution,
+&quot;COPYRIGHT&quot; and &quot;README&quot;.  We only picked
+these files because we know everyone has them.  Create a directory
+for the textbase:
+<PRE>
+sti-gw% mkdir /local/text/example1
+sti-gw% cp COPYRIGHT README /local/text/example1
+</PRE>
+
+<P>
+Now create a directory to hold the indexes:
+<P>
+<TT>sti-gw% mkdir /local/indexes/example1</TT>
+<P>
+Now we can index the text:
+<PRE>
+sti-gw% Iindex -d /local/indexes/example1/EX1 /local/text/example1/*
+Iindex 1.09.09
+Building document list ...
+Building database /local/indexes/example1/EX1:
+   Parsing files ...
+   Parsing /local/text/example1/COPYRIGHT ...
+   Parsing /local/text/example1/README ...
+   Indexing 1004 words ...
+   Merging index ...
+Database files saved to disk.
+sti-gw% ls -l /local/indexes/example1/
+total 16
+-rw-r--r--   1 escott   staff         85 Apr 11 12:24 EX1.dbi
+-rw-r--r--   1 escott   staff       4016 Apr 11 12:24 EX1.inx
+-rw-r--r--   1 escott   staff         24 Apr 11 12:24 EX1.mdg
+-rw-r--r--   1 escott   staff         40 Apr 11 12:24 EX1.mdk
+-rw-r--r--   1 escott   staff        520 Apr 11 12:24 EX1.mdt
+</PRE>
+
+<P>
+That indexed the text in /local/text/example1 and created indexes
+in /local/indexes/example1.  Now we can use those indexes to search
+for text:
+<PRE>
+Isearch -d /local/indexes/example1/EX1 fee fee
+Isearch 1.09.09
+Searching database /local/indexes/example1/EX1:
+1 document(s) matched your query, 1 document(s) displayed.
+      Score   File
+   1.   100   /local/text/example1/COPYRIGHT
+Select file #: 
+</PRE>
+
+<P>
+The word &quot;fee&quot; occurs only in the file COPYRIGHT.  Note
+that because of a bug in version 1.09.09 (actually, it's believed
+to be a bug in gcc that Isearch exposes) the search term has to
+be entered twice.  This is corrected in later versions.
+
+<a name="ch2">
+<H1>2. Indexing Collections.</H1>
+</a>
+
+<P>
+This section will discuss the issues surrounding indexing of text
+with Isearch, including how to arrange the text, decide on a doctype
+to use, and actually run the indexer.
+
+<a name="ch2-1">
+<H2>2.1 Arranging the Text.</H2>
+</a>
+
+<P>
+Arranging the text to be indexed is fairly straightforward.  Good
+practice dictates that the textbase be given its own directory
+hierarchy to make maintenance simple.  It's also a good idea to
+not mix up the text files with the indexes.  Maintenance is simpler
+when they are separate, and there is also some performance gain
+to be realized when the indexes and text files are on separate
+disks.
+<P>
+The Iindex command will need to be given a list of files to index
+and directories to traverse.  If you give Iindex the &quot;-r&quot;
+option then it will recursively plunge headlong into subdirectories
+indexing everything it can find.  For simple collections this
+is probably a good thing, but for more subtle applications you'll
+probably want to do the filespace traversal yourself.  This is
+especially true if you are using some kind of version control
+system like SCCS or RCS.
+<P>
+Unix filesystems impose virtually no penalty for using subdirectories,
+so feel free to impose quite a bit of organization on your tree
+of text.
+<P>
+Note that if you have a huge number of small files, you'll want
+to either use a lot of subdirectories or else combine the small
+files into larger ones.  Consider the case of 100,000 files of
+one line each (an extreme example, but we see it all the time).
+ If you put 100,000 files into one Unix directory, file access
+will be incredibly slow.  Consider one of two solutions:
+<P>
+   1) Create 100 subdirectories and put 1000 files into each subdirectory.
+<P>
+   -or-
+<P>
+   2) Concatenate all the files into one 100,000 line file.  Index
+this file using the &quot;ONELINE&quot; doctype (discussed in
+Section 2.3).
+<P>
+The second solution is strongly preferred.
+<P>
+Do not put text or index files into a network-mounted filesystem.
+ These files will be hit hard and hit often, and can bring a network
+to its knees.  Don't let vendor claims of caching performance
+fool you either:  Isearch and AFS (or DFS) do not get along well
+(the files are accessed in ways generally guaranteed to *not*
+be cached).  So far, experiments with using CacheFS to back up
+accesses to NFS 3.0 mounted partitions hasn't been very promising
+either.  Cheap SCSI disks are below 30 cents per megabyte now.
+Consider dedicating two spindles, preferably on separate SCSI
+controllers, to Isearch alone and you'll see a lot better performance.
+
+<a name="ch2-2">
+<H2>2.2 Running the Indexer.</H2>
+</a>
+
+<P>
+Iindex takes several command line options.  Here is a list of
+the flags along with a brief discussion of each:
+<P>
+<dl>
+<dt>-d (X)
+    <dd>This option specifies the name of the index.  The index
+name doesn't have to have anything to do with the textbase, but
+it's a good idea to make it descriptive.  For example, if you
+have a company phone book you want to make searchable, it would
+be a good idea to use a name like &quot;PHONENUMBERS&quot; or
+&quot;DIRECTORY&quot; instead of a name like &quot;INDEX&quot;.
+ Index names may have mixed upper and lower case, as long as you
+use the cases consistently.  The indexes &quot;Phone&quot; and
+&quot;phone&quot; refer to entirely separate collections.  The
+index names may also (and very often will) contain path names
+to point to a directory.  An option like &quot;-d /local/index/CompanyPhoneBook&quot;
+is typical.  This option is required for every Iindex command.
+<P>
+         
+<P>
+<dt>-a
+    <dd>This option means &quot;add to an existing textbase&quot;.
+ Use this if you want to add a few files later on.  Note that
+you should use this sparingly, since it can be a little slow.
+ Also avoid adding files one at a time if possible.  It's a lot
+better to add a whole bunch at once like:
+<PRE>
+Iindex -d INDEXNAME -a newFile1 newFile2 newFile3
+</PRE>
+
+<P>
+instead of adding the files one command at a time.
+<P>
+         
+<P>
+<dt>-m (X)
+    <dd>This option tells Iindex how many megabytes of text
+to read and index in memory at once.  It doesn't tell Iindex how
+many megabytes total to use, so this figure should generally be
+about 4 megabytes less than the total amount of memory for an
+otherwise quiescent system.  If you're indexing 5.5 megabytes
+of text, use &quot;-m 6&quot;.  It's a good idea from a performance
+standpoint to have at least as much RAM available as the size
+of the textbase to be indexed.  Searching is almost independent
+of the amount of RAM available, but indexing needs lots and lots
+of memory to go quickly. Note that this means you can lease/borrow/steal
+time on a Cray CS6400 with 4 gigs of RAM for indexing and then
+use those indexes on a modest SparcStation 5 for searching if
+you have to.  We've done it.  If you're short on RAM for indexing,
+then there will be a lot of disk activity while smaller indexes
+are merged.
+<P>
+        
+<P>
+<dt>-s (X)
+    <dd>This option informs Iindex that you have multiple logical
+documents per physical file, and that they are separated by something.
+ Consider this example file:
+<PRE>
+Hi, I'm the first document.
+###
+Greetings to all from the second document.
+</PRE>
+
+<P>
+If you index with:
+<PRE>
+Iindex -d mySeparatorExample -s &quot;###&quot; exampleFile
+</PRE>
+
+<P>
+then you'll have two logical documents.  A search for &quot;greetings&quot;
+will match the second paragraph, but not the first.
+<P>
+Use of the -s option can give you, in essence, a quick way to
+fake having new doctypes.
+<P>
+         
+<P>
+<dt>-t (X)
+    <dd>This option tells Iindex what doctype to use when indexing
+the files.  A doctype is a module that explains how to find logical
+documents and subfields within those documents.  It also has code
+to display documents that it finds.  For example, the &quot;ONELINE&quot;
+doctype tells Iindex that the file consists of a bunch of single
+line logical documents.  The &quot;PARA&quot; doctype says that
+each paragraph is a document.  The &quot;SGMLTAG&quot; doctype
+tells Isearch how to find the &quot;&lt;title&gt;&quot; fields
+and so forth inside an SGML document.
+<P>
+If you don't specify a doctype, then the &quot;SIMPLE&quot; doctype
+is used by default.  SIMPLE doesn't really do much; it assumes
+that there is one document per file, no fields, and that presentation
+is handled by just dumping the contents of the file.
+<P>
+For more information, see the files &quot;dtconf.inf&quot;, &quot;BSn.doc&quot;,
+and &quot;STI.doc&quot; in the doctype directory.
+<P>
+         
+<P>
+<dt>-f (X)
+    <dd>This option causes Iindex to read a list of file names
+to be indexed from a file.  For example:
+<P>
+         
+<PRE>
+ls /local/text/example2 &gt; myListOfFiles
+Iindex -d exampleIndex -f myListOfFiles
+</PRE>
+
+<P>
+         
+<P>
+causes Iindex to read the file &quot;myListOfFiles&quot; and then
+index every file it sees in there.  This is very useful for huge
+lists of files.  By default, older Unix systems can't pass command
+lines more than 10240 characters long.  If you have several thousand
+files to index, the command line could quickly become too long.
+<P>
+(Note to the confused: No, you would never type a line that long.
+ But consider how big a command line can get through filename
+expansion with wildcards. Try this:
+<PRE>
+echo /usr/man/*/* | wc
+</PRE>
+
+<P>
+the wordcount utility reports that &quot;echo /usr/man/*/* expanded
+into a line 122634 characters long.
+<P>
+(Subnote to the cluefull: So, if that command expanded to 122K,
+how could it be passed to &quot;echo&quot; so I could wordcount
+it?  Simple.  I used Solaris 2.5, which allows 1 megabyte command
+lines.  Nonetheless, there are a lot of Ultrix boxes still in
+use so it's worth noting.)).
+<P>
+         
+<P>
+<dt>-r
+    <dd>This section says to recursively descend into subdirectories.
+ If you have a whole tree of text then you can use this option
+and just give the top level directory name to index.  Iindex will
+do the rest.  Do not use this option if you're using SCCS or RCS.
+Iindex will blithely index the SCCS &quot;s.&quot; files and
+will plunge into RCS directories and will just generally not do
+what you expected.  How to escape this dilemma?  Use &quot;find&quot;.
+Find is your friend.
+<PRE>
+Iindex -d watchThisItsCool `find /deeptree -t f \! -name &quot;s.*&quot;&quot;`
+</PRE>
+
+<P>
+will cause Iindex to index all files below &quot;/local/text/deeptree&quot;
+except for those that begin with &quot;s.&quot; (SCCS files).
+<P>
+If you're using the &quot;sccs&quot; convenience shell, then you'll
+want to ignore &quot;SCCS&quot; directories.
+<P>
+Find is such a powerful command that you should spend a while
+getting to know it better if you haven't already.  It especially
+useful for maintaining collections of text by doing things like
+weeding out old versions of files automatically.
+<P>
+         
+<dt>-o (X)
+    <dd>The -o option is used to pass information to specific
+doctypes.  Each doctype treats this option differently (if at
+all) so check the documentation for your specific doctype before
+worrying about this.
+</dl>
+
+<P>
+Once you've decided what options to use, let Iindex bang away
+creating indexes.  Don't be surprised if this takes a long time,
+especially if you have more text than will fit into RAM.
+
+<a name="ch2-3">
+<H2>2.3 Deciding on Doctypes.</H2>
+</a>
+
+<P>
+Doctypes are modules that explains how to find logical documents
+and fields within those documents.  It also has code to display
+documents that it finds. 
+<P>
+The default doctype is &quot;SIMPLE&quot;.  It tells Iindex that
+there is one logical document per file, that there are no fields
+to index separately, and that when displaying these documents
+they will just be dumped out without any formatting.  SIMPLE really
+is the simplest doctype you can have.
+<P>
+The other CNIDR-supplied doctype is &quot;SGMLTAG&quot;.  This
+doctype will make one logical document per file, will index text
+occurring inside of SGML-like markup pairs as fields, and will
+present the text by dumping it out without a lot of special formatting.
+ This doctype can be used to index HTML web pages for making searchable
+WWW sites.
+<P>
+There are many other doctypes available.  See the files &quot;BSn.doc&quot;
+and &quot;STI.doc&quot; in the doctype directory for more information.
+ New doctypes are being added all the time, so look for other
+&quot;*.doc&quot; files in that directory.
+
+<a name="ch3">
+<H1>3. Searching.</H1>
+</a>
+
+<P>
+This section describes the &quot;Isearch&quot; command itself.
+ Isearch is used to search through the text collection after it
+has been indexed with Iindex.
+
+<a name="ch3-1">
+<H2>3.1 Simple Searches.</H2>
+</a>
+
+<P>
+The simplest case searches in Isearch are to look for either one
+word or any of a list of words in any location within every file
+in the collection. Consider searching for &quot;poetry&quot; or
+&quot;rhyme&quot; or &quot;verse&quot; in a collection of journal
+articles:
+<PRE>
+Isearch -d MLAabstracts poetry rhyme verse
+</PRE>
+
+<P>
+This will display a list of matching items.  The items will have
+their &quot;headlines&quot; displayed.  To select one for viewing,
+enter the number of the item and press &quot;Return&quot;.  To
+exit, press &quot;Return&quot; by itself.
+<P>
+Note that adding more search terms will generally cause more items
+to be returned, rather than fewer.  This is counterintuitive,
+but isn't the big problem that it seems to be.  Isearch has a
+very sophisticated ranking technique that will try to decide what
+documents are most likely to be useful and will return them at
+the top of the list.  This ranking method actually works better
+for longer queries than for short ones.
+
+<a name="ch3-2">
+<H2>3.2 Searching in Subfields.</H2>
+</a>
+
+<P>
+Consider the following HTML text:
+<PRE>
+&lt;title&gt; Cool Page &lt;/title&gt;
+This is my excellent Web Page.
+</PRE>
+
+<P>
+If you index this text with the SGMLTAG doctype, then you can
+search for words that occur anywhere in the document, or you can
+search for words that only occur in the title (inside the &lt;title&gt;
+and &lt;/title&gt; markers).
+<P>
+For example:
+<PRE>
+sti-gw% Iindex -d why -t sgmltag /local/text/testfile
+Iindex 1.13
+Building document list ...
+Building database why:
+   Parsing files ...
+   Parsing /local/text/testfile ...
+   Indexing 7 words ...
+   Merging index ...
+Database files saved to disk.
+sti-gw% Isearch -d why web
+Isearch 1.13
+Searching database why:
+1 document(s) matched your query, 1 document(s) displayed.
+      Score   File
+   1.   100   /local/text/testfile
+ Cool Page 
+Select file #: 
+sti-gw% Isearch -d why title/web
+Isearch 1.13
+Searching database why:
+0 document(s) matched your query, 0 document(s) displayed.
+</PRE>
+
+<P>
+In the first example, we searched for &quot;web&quot;, and lo
+and behold we found it. In the second example we looked for &quot;title/web&quot;,
+which means &quot;find me occurrences of 'web' inside the 'title'
+field&quot;.  There aren't any of those, so Isearch says there
+were no matching documents.
+
+<a name="ch3-3">
+<H2>3.3 Boolean Searches.</H2>
+</a>
+
+<P>
+This discussion of boolean searches assumes you have at least
+version 1.13.  If you don't, then the brief section of &quot;rpn&quot;
+queries will apply to you but not the rest of this section.  And
+if you aren't using at least 1.13 then I strongly urge you
+to upgrade because you're living with too many bugs.
+
+<a name="ch3-3-1">
+<H3>3.3.1 &quot;Infix&quot; Notation Boolean Searches</H3>
+</a>
+
+<P>
+Infix notation is the old familiar notation you remember from
+Cobol, Fortran, C, and TI calculators.
+<P>
+Reusing our example from section 3.2, we still have the Cool Page
+document.  To search for a document that contained both &quot;cool&quot;
+and &quot;page&quot;, we could use a query like:
+<PRE>
+sti-gw% Isearch -d why -infix cool and page
+</PRE>
+
+<P>
+To search for a document with either cool or page (or even both)
+we can use:
+<PRE>
+sti-gw% Isearch -d why -infix cool or page
+</PRE>
+
+<P>
+To search for documents that contain &quot;cool&quot; but not
+&quot;page&quot;, we can say:
+<PRE>
+sti-gw% Isearch -d why -infix cool andnot page
+</PRE>
+
+<P>
+Note that &quot;andnot&quot; is one word.
+<P>
+Note further than you can say &quot;&amp;&amp;&quot; instead of
+&quot;and&quot;, &quot;||&quot; instead of &quot;or&quot;, and
+&quot;&amp;!&quot; instead of &quot;andnot&quot;.  This is handy
+for recovering C programmers.
+<P>
+You can group things with parenthesis to make more complicated
+queries, but remember that most Unix shells place special meaning
+in parenthesis.  Protect them with quotation marks like this:
+<PRE>
+sti-gw% Isearch -d why -infix &quot;(page or doc)&quot; and &quot;(cool or cold)&quot;
+</PRE>
+
+<a name="ch3-3-2">
+<H3>3.3.2 &quot;RPN&quot; Notation Boolean Searches</H3>
+</a>
+
+<P>
+RPN notation is the old familiar notation you remember from Forth,
+HP calculators, and your compiler writing class.
+<P>
+You probably shouldn't be using RPN unless you know what you're
+doing, so here's that last query from the previous section in
+rpn:
+<PRE>
+sti-gw% Isearch -d why -rpn page doc or cool cold or and
+</PRE>
+
+<P>
+In a nutshell, you &quot;push&quot; search terms onto a stack
+and then feed enough operators to that stack to pop them all off.
+ What could be more obvious?
+
+<a name="ch3-4">
+<H2>3.4 Notes on Ranking.</H2>
+</a>
+
+<P>
+In sections above, we have alluded to a sophisticated ranking
+algorithm. We use an algorithm developed by Gerald Salton for
+the SMART retrieval system.  Without going into great detail,
+both the search terms and the resulting documents are scored.
+ Documents that contain more instances of higher scoring words
+gets ranked higher.
+<P>
+What makes a high-scoring word?  Basically, the fewer documents
+the word occurs in, the more important it must be.  This is often
+bogus, but more often it's useful.
+<P>
+A high-scoring document is one that contains a lot of instances
+of search terms.
+<P>
+To combine the scores, the document and the search term scores
+are multiplied for each matching search term.  These products
+are totaled over the set of all the search terms.  Those who are
+good at math will recognize this as a &quot;dot product&quot;.
+ Finally, the scores are normalized so the highest score is 1.0.
+<P>
+Generally speaking, using a search word that appears in nearly
+every document won't affect the ranking of results.  It will,
+however, slow down the query tremendously so it still isn't a
+good idea.
+<P>
+While we're on the subject, it's possible manually alter the search
+term weightings, albeit crudely.  Consider this case:
+<PRE>
+sti-gw% Isearch -d why cool:5 page
+</PRE>
+
+<P>
+This tells Isearch to look for &quot;cool&quot; or &quot;page&quot;,
+but give &quot;cool&quot; five times the normal weight.  The following
+example does the opposite:
+<PRE>
+sti-gw% Isearch -d why cool:-5 page
+</PRE>
+
+<P>
+This tells Isearch to find documents that contain &quot;page&quot;,
+but if they contain &quot;cool&quot; then subtract the value of
+that match five times.  In other words, &quot;I really want to
+see documents with &quot;page&quot; in them, but if they also
+contain &quot;cool&quot; then rank them really low&quot;.  This
+is more useful than boolean queries with &quot;andnot&quot;. Consider
+a set of documents on, say, databases.  You might want a query
+like:
+<PRE>
+sti-gw% Isearch -d databases OODBMS andnot RDBMS
+</PRE>
+
+<P>
+Problem is, if there is a good article on OODBMSes that just happens
+to say &quot;Unlike braindamaged RDBMSes, our system can solve
+world hunger&quot; then the above query will skip that document.
+ Using a negative term weight will push that document down on
+the list, but at least it will still be there.
+
+<a name="ch3-5">
+<H2>3.5 Wildcards</H2>
+</a>
+
+<P>
+Isearch supports a limited wildcard facility.  You can append
+an asterix to the end of a search term to match any word that
+begins with a given prefix. For example:
+<PRE>
+sti-gw% Isearch -d diseases chol*
+</PRE>
+
+<P>
+will find any document with a word that begins with &quot;chol&quot;,
+including &quot;cholesterol&quot;, and yes, even, &quot;cholesteral&quot;.
+ This is useful for finding misspelled words in addition to its
+obvious uses.
+
+<a name="ch3-6">
+<H2>3.6 Prefixes and Suffixes</H2>
+</a>
+
+<P>
+Isearch will allow you to slightly change the output when it prints
+a document.  The following query shows this:
+<PRE>
+sti-gw% Isearch -d why -prefix &quot;&lt;large&gt;&quot; -suffix &quot;&lt;/large&gt;&quot; cool
+Isearch 1.13
+Searching database why:
+1 document(s) matched your query, 1 document(s) displayed.
+      Score   File
+   1.   100   /local/text/testfile
+ Cool Page 
+Select file #: 1
+&lt;title&gt; &lt;large&gt;Cool&lt;/large&gt; Page &lt;/title&gt;
+This is my excellent Web Page.
+</PRE>
+
+<P>
+The -prefix option lets you specify a string to be printed immediately
+before a word that matches.  The -suffix option is for a string
+to be printed after the word.  Note the SGML markup on either
+side of &quot;Cool&quot; in the above example.
+<P>
+NOTE: If you're going to specify SGML or HTML on a command line,
+protect it with quotation marks.  Otherwise, the arrows will be
+interpreted as file redirection operators with completely unexpected
+results.
+
+<a name="ch4">
+<H1>4. Maintaining Your Data.</H1>
+</a>
+
+<P>
+After you index your collection and start searching in it, you'll
+eventually have to update the data.  This section describes how
+to add, remove, and relocate your files.  The command used for
+this is &quot;Iutil&quot;.
+
+<a name="ch4-1">
+<H2>4.1 Removing old Files.</H2>
+</a>
+
+<P>
+To remove an old file from being considered for a search requires
+two steps.  The first step is to find the document &quot;key&quot;
+for the one to be removed:
+<PRE>
+sti-gw% Iutil -d huh -v
+Iutil 1.13
+DocType: [Key] (Start - End) File
+(* indicates deleted record)
+USMARC: [10] (0 - 838) /local/text/marc/demomarc
+USMARC: [1839] (839 - 1577) /local/text/marc/demomarc
+</PRE>
+
+<P>
+In this case, we used Iutil's -v option to display the table of
+documents.  The key for each document appears inside the brackets.
+ We'll delete the second document, key number 1839:
+<PRE>
+sti-gw% Iutil -d huh -del 1839
+Iutil 1.13
+Marking documents as deleted ...
+1 document(s) marked as deleted.
+</PRE>
+
+<P>
+To see the deletion:
+<PRE>
+sti-gw% Iutil -d huh -v
+Iutil 1.13
+DocType: [Key] (Start - End) File
+(* indicates deleted record)
+USMARC: [10] (0 - 838) /local/text/marc/demomarc
+USMARC: [1839] (839 - 1577) /local/text/marc/demomarc *
+</PRE>
+
+<P>
+The asterisk at the end of the last line means that entry has
+been marked as deleted.
+<P>
+After deleting one or more documents, it's a good idea to force
+the deletion with Iutil -c:
+<PRE>
+sti-gw% Iutil -d huh -c
+Iutil 1.13
+Cleaning up database (removing deleted documents) ...
+1 document(s) were removed.
+sti-gw% Iutil -d huh -v
+Iutil 1.13
+DocType: [Key] (Start - End) File
+(* indicates deleted record)
+USMARC: [10] (0 - 838) /local/text/marc/demomarc
+</PRE>
+
+<P>
+You should NEVER remove an actual data file from the collection
+until you run Iutil -c to commit the changes. Otherwise, Isearch
+will display an error message when you try to search.
+
+<a name="ch4-2">
+<H2>4.2 Adding new Files.</H2>
+</a>
+
+<P>
+There are two ways to add a new file to an existing collection:
+either reindex the whole collection from scratch or use incremental
+indexing.  If you have enough RAM to reindex the whole collection,
+you should probably do that. It's actually faster to start from
+scratch than it is to add a few files piecemeal.  If you don't
+have that much RAM, then you have no choice.
+<P>
+Here's an example, adding the file /local/text/example1/COPYRIGHT:
+<PRE>
+sti-gw% Iindex -d huh -a /local/text/example1/COPYRIGHT
+Iindex 1.13
+Building document list ...
+Adding to database huh:
+   Parsing files ...
+   Parsing /local/text/example1/COPYRIGHT ...
+   Indexing 5100 words ...
+   Merging index ...
+Database files saved to disk.
+</PRE>
+
+<P>
+As a general rule, you want to specify as many new files to add
+at once as possible.  Don't do this one at a time for even as
+little as two files because you'll be here for many minutes as
+it is.
+<P>
+And a note: You (generally) can't modify an existing data file
+and expect to get correct results.  You'll have to delete the
+old one and index the new one.
+
+<a name="ch4-3">
+<H2>4.3 Moving Files Around.</H2>
+</a>
+
+<P>
+Sometimes you'll want to move files around in your directory structure,
+and the last thing you want to have to do is reindex all of them.
+ Here's how to relocate the files from the above example:
+<PRE>
+sti-gw% Iutil -d huh -newpaths
+Iutil 1.13
+Scanning database for file paths ...
+Enter new path or &lt;Return&gt; to leave unchanged:
+Path=[/local/text/example1/]
+    &gt; /export/home/escott
+Done.
+</PRE>
+
+<a name="ch4-4">
+<H2>4.4 Viewing Information.</H2>
+</a>
+
+<P>
+We've already seen &quot;Iutil -v&quot; to look at index files
+to see what they contain.  Here are some other options to Iutil
+to see different things:
+<PRE>
+sti-gw% Iutil -d huh -v
+Iutil 1.13
+DocType: [Key] (Start - End) File
+(* indicates deleted record)
+USMARC: [10] (0 - 838) /local/text/marc/demomarc
+USMARC: [1839] (839 - 1577) /local/text/marc/demomarc
+</PRE>
+
+<P>
+Pretty basic, right?  The &quot;-vi&quot; option shows some summary
+information:
+<PRE>
+sti-gw% Iutil -d huh -vi
+Iutil 1.13
+Database name: /local/project/Isearch-1.13-nrn/bin/huh
+Global document type: USMARC
+Total number of documents: 2
+Documents marked as deleted: 0
+</PRE>
+
+<P>
+And the &quot;-vf&quot; option shows information about fields:
+<PRE>
+sti-gw% Iutil -d huh -vf
+Iutil 1.13
+The following fields are defined in this database:
+001
+008
+010
+LCCN
+040
+020
+ISBN
+043
+</PRE>
+
+<P>
+[and so forth.  The numbers above are also field names for the
+USMARC record format.]
+
+<a name="ch5">
+<H1>5. Performance Issues.</H1>
+</a>
+
+<P>
+There are several performance issues with Isearch.  They can be
+roughly divided into &quot;indexing concerns&quot; and &quot;search
+concerns&quot;.  Indexing concerns only pop when files are indexed,
+but searching issues will show up every day.
+
+<a name="ch5-1">
+<H2>5.1 Location of Files for Speed.</H2>
+</a>
+
+<P>
+Location of files in your system is important for good speed.
+ Good speed is, in turn, essential for supporting a lot of simultaneous
+users.
+<P>
+In general, it's a good idea to locate the index and the data
+files on separate disk drives.  Do not make the mistake of putting
+them in separate partitions on the same drive: this is worse than
+doing nothing.  Generally, the disk usage pattern will alternate
+between hitting the index files and the data files in short, alternating
+bursts.  Near the conclusion of a search the index files will
+be accessed sequentially, but until then the pattern appears essentially
+random to the operating system.  Putting the two sets of files
+on separate spindles will help minimize the amount of head motion.
+ This is most noticable for searching, but affects indexing to
+some degree.  The biggest gains will be for the largest collections.
+ If you only have 100megs of data or so, then you'll be hard pressed
+to measure the gain.
+<P>
+In a related note: consider RAID. In particular, consider using
+RAID level 0 with a small granularity so you can get the most
+I/O operations per second.  Most RAID management software will
+let you crank the configuration toward either &quot;faster streaming
+speed&quot; or &quot;more operations per second&quot; and you
+definitely want the latter.  The only time Isearch will stream
+a device is during the result set generation phase of a search
+when the index file is essentially streamed (and, incidentally,
+the textbase storage device is being hit in a purely random fashion).
+ These bursts don't last long, so most of the time the small granule
+size is a winner.  Since most Unixes will transfer one page of
+data from a device at a minimum, use the &quot;pagesize&quot;
+command and set your chunk size to that.
+
+<a name="ch5-2">
+<H2>5.2 How Much RAM is Enough?</H2>
+</a>
+
+<P>
+Answer: how much can you fit into the box?
+<P>
+Better answer: Even that may not be enough.
+<P>
+Indexing is pretty slow with Isearch.  To speed it up, Iindex
+will try to use lots of RAM.  The &quot;-m&quot; option is used
+to specify how much RAM to allocate for buffering data.  Note
+that Iindex will use considerably more than what you specify.
+ On my little Sparc5 with 48 megs of RAM and an additional 16
+megs of swap space, I can usually only use &quot;-m 6&quot; even
+though I have considerably more virtual memory available:
+<PRE>
+elvis% swap -s
+total: 41304k bytes allocated + 8720k reserved = 50024k used, 15620k available
+elvis% Iindex -d huh -m 7 -a /local/text/example1/COPYRIGHT
+Iindex 1.13
+Building document list ...
+Adding to database huh:
+   Parsing files ...
+Virtual memory exceeded in `new'
+</PRE>
+
+<P>
+Granted, I'm running CDE/Motif, netscape, and a few goodies, but
+nothing really serious.  To index on this machine I usually shut
+down to single-user mode and run Iindex from the console.  It's
+ugly, but it's also a lot faster.
+<P>
+If you need to index a lot of data, you need a lot of RAM to make
+it go quickly.
+<P>
+Searching is another issue entirely.  More RAM helps, essentially
+without limit, but the reward isn't as great.  The basic search
+algorithm runs in about 50 lines of code.  The problem starts
+when that basic algorithm starts finding matches.  When it does,
+those matches are stored in a result set.  These result sets can
+get pretty big in a hurry.  Imagine searching for &quot;knee&quot;
+in a textbase on knee injuries: the &quot;knee&quot; result set
+will get huge.  Booleans won't help you, either.  In fact, they
+make it worse.  Imagine searching for &quot;knee&quot; and &quot;dislocation&quot;.
+ You'll still have to drag around the monster &quot;knee&quot;
+result set, and then you'll have to make a second one for &quot;dislocation&quot;,
+and then finally you'll have to create a third one that is the
+union of the two.  Isearch will delete the first two when the
+third one is created, but only after the third one has been finished.
+ It can add up in a hurry.
+<P>
+While the relational database people have spent years optimizing
+for this situation, Isearch isn't that clever yet.  Moral to the
+story: make sure your users know to use &quot;good quality&quot;
+search terms.  They'll get better results and your office won't
+look like SIMM City.
+</BODY>
+
+</HTML>

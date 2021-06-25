@@ -1,0 +1,42 @@
+The server has been successfully tested with the following clients.
+
+-------------------------------------------------------------------
+Client #0
+-------------------------------------------------------------------
+The clients included with Isite, of course!
+
+http://vinca.cnidr.org/software/
+
+
+
+-------------------------------------------------------------------
+Client #1
+-------------------------------------------------------------------
+The National Center for Intelligent Information Retrieval (CIIR) 
+at the University of Massachusetts at Amherst (ciir.cs.umass.edu).
+Ameritech Library Services with special thanks to Jeff 
+Graubart-Cervone .
+Written by Syzygy Designs - Jeff Gelbard (jgelbard@cs.umass.edu) 
+Also, special thanks are given to Eliot Christian at the US 
+Geological Survey.
+Funding for this project was provided to the CIIR by the Defense 
+Technical Information Center (DTIC) .
+
+	ImplementationId=Syzygy Designs/Ameritech Library Services
+	ImplementationName=BibEngine 8.0 Search Client
+	ImplementationId=Version 1.0
+
+ftp://ftp.usgs.gov/pub/gils/ciir/dtic_a02
+
+
+
+-------------------------------------------------------------------
+Client #2
+-------------------------------------------------------------------
+YAZ client toolkit.
+
+	ImplementationId=YAZ (id=81)
+	ImplementationName=Index Data/YAZ
+	ImplementationVersion=1.0 patchLevel 2 
+
+

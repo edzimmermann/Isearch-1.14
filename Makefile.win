@@ -1,0 +1,188 @@
+#
+# Compiling and Installing Isearch
+#
+# 1)  Type `make'
+#
+# 2)  Type `make install' (as root), to copy executables to /usr/local/bin/.
+#       or `make install INSTALL=~/bin' to copy them to ~/bin/.
+#       etc.
+#
+# 3)  Typing `make clean' will clean up .o files.
+#
+# The executables are
+#
+#	Iindex	- command line indexing utility
+#	Isearch	- command line searching utility
+#	Iutil - command line utilities for Isearch databases
+#
+SHELL=/bin/sh
+
+#
+# Compiler
+#
+CC=g++
+#CC=/sw/CenterLine/bin/CC
+
+#
+# Compiler Flags
+#
+# Uncomment the appropriate entry
+#
+#CFLAGS=-g -DUNIX -Wall -Dfar=
+
+CFLAGS=-O2 -DUNIX
+#CFLAGS=-g -DUNIX -Wall
+#CFLAGS=-g -DUNIX	# CenterLine
+
+#
+# Install Directory
+#
+# Where should I install executables (make install)?
+#
+INSTALL=/usr/local/bin
+
+#
+# Executables Directory
+#
+# Where should I place executables?
+#
+BIN_DIR=bin
+
+#
+# Document Type Directory
+#
+# Where are document type sources located?
+#
+DOCTYPE_DIR=doctype
+
+#
+# Doctype dependent libraries (-lgdbm, etc)
+DOCLIB=
+
+#
+# Source Directory
+#
+# Where are search engine sources located?
+#
+SRC_DIR=src
+
+# 
+# That should be all you need to configure
+#
+
+RM = del
+VER=1.13
+DIST=Isearch-$(VER)
+BINDIST=$(DIST)-bin
+freezename=`echo $(VER) | sed 's/\./-/g'`
+OSNAME=`uname -s`
+OSVER=`uname -r`
+OS=$(OSNAME)_$(OSVER)
+
+all:
+	$(MAKE) -f Makefile.all "CFLAGS=$(CFLAGS)" \
+		"BIN_DIR=$(BIN_DIR)" "DOCTYPE_DIR=$(DOCTYPE_DIR)" \
+		"SRC_DIR=$(SRC_DIR)" "CC=$(CC)" "DOCLIB=$(DOCLIB)" \
+		"LDFLAGS=$(LDFLAGS)"
+
+#	cd $(DOCTYPE_DIR); $(MAKE) "CC=$(CC)" "CFLAGS=$(CFLAGS)"
+#	cd $(SRC_DIR); $(MAKE) "BIN_DIR=../$(BIN_DIR)" \
+#			"DOCTYPE_DIR=../$(DOCTYPE_DIR)" \
+#			"CFLAGS=$(CFLAGS)" "CC=$(CC)"
+
+clean:
+	$(RM) *~
+	$(RM) $(BIN_DIR)\Iindex.exe
+	$(RM) $(BIN_DIR)\Isearch.exe
+	$(RM) $(BIN_DIR)\Iutil.exe
+	$(RM) $(BIN_DIR)\libIsearch.lib
+	$(RM) $(BIN_DIR)\core
+	cd $(SRC_DIR)
+	$(MAKE) -i clean
+	cd ..
+	cd $(DOCTYPE_DIR)
+	$(MAKE) -i clean
+	cd ..
+
+realclean:
+	$(RM) *~ $(BIN_DIR)/Iindex $(BIN_DIR)/Isearch $(BIN_DIR)/Iutil \
+		$(BIN_DIR)/libIsearch.a $(BIN_DIR)/core config.* Makefile.all
+	cd $(SRC_DIR)
+	$(MAKE) -i realclean
+	cd ..
+	cd $(DOCTYPE_DIR)
+	$(MAKE) -i clean
+	cd ..
+
+distclean:
+	$(RM) *~ $(BIN_DIR)/Iindex $(BIN_DIR)/Isearch $(BIN_DIR)/Iutil \
+		$(BIN_DIR)/libIsearch.a $(BIN_DIR)/core config.* \
+		Makefile.all
+	cd $(SRC_DIR)
+	$(MAKE) -i distclean
+	cd ..
+	cd $(DOCTYPE_DIR)
+	$(MAKE) -i clean
+	cd ..
+
+build:
+	`if [ -e ./Makefile ] ; \
+		then $(MAKE) -i realclean; \
+		else true; \
+	fi`
+#	`if [ -e ./config.cache ] ; \
+#		then true; \
+#		else ./configure; \
+#	fi`
+	$(MAKE) all "CC=$(CC)" \
+	"CFLAGS=$(CFLAGS)" \
+	"MYRANLIB=$(MYRANLIB)" \
+	"MYRANLIB_TEST=$(MYRANLIB_TEST)" \
+	"BIN_DIR=../$(BIN_DIR)" \
+	"DOCLIB=$(DOCLIB)"  "LDFLAGS=$(LDFLAGS)"
+
+install:
+	@echo "*** Copying Isearch executables to $(INSTALL)/. ***"
+	cp $(BIN_DIR)/Iindex $(INSTALL)/.
+	cp $(BIN_DIR)/Isearch $(INSTALL)/.
+	cp $(BIN_DIR)/Iutil $(INSTALL)/.
+
+dist:
+	$(MAKE) -i distclean
+	rm -f *~ $(SRC_DIR)/*~ $(DOCTYPE_DIR)/*~ \
+		*.bak $(SRC_DIR)/*.bak $(DOCTYPE_DIR)/*.bak \
+		$(SRC_DIR)/ISEARCH.*
+	ls -F $(SRC_DIR)
+	rm -fr ../$(DIST)
+	mkdir ../$(DIST)
+#	cd $(SRC_DIR); rcsfreeze $(freezename); co -r$(freezename) RCS/*,v
+	find . -name \* -print | grep -v '^RCS/' > .tmpdist-$(VER)
+	tar cf - `cat .tmpdist-$(VER)` | (cd ../$(DIST); tar xf -)
+	cd ..; tar cf $(DIST).tar $(DIST)
+	rm -f ../$(DIST).tar.gz
+	cd ..; gzip $(DIST).tar
+	cp ./CHANGES ../.
+
+bindist:
+	rm -fr ../$(BINDIST)
+	mkdir ../$(BINDIST)
+	mkdir ../$(BINDIST)/$(BIN_DIR)
+	mkdir ../$(BINDIST)/$(SRC_DIR)
+	mkdir ../$(BINDIST)/$(DOCTYPE_DIR)
+	$(MAKE) all
+	$(MAKE) install INSTALL=../$(BINDIST)/$(BIN_DIR)
+	cp $(BIN_DIR)/libIsearch.a ../$(BINDIST)/$(BIN_DIR)/.
+	cp $(SRC_DIR)/*.h ../$(BINDIST)/$(SRC_DIR)/.
+	cp $(SRC_DIR)/*.hxx ../$(BINDIST)/$(SRC_DIR)/.
+	cp $(DOCTYPE_DIR)/*.h ../$(BINDIST)/$(DOCTYPE_DIR)/.
+	cp $(DOCTYPE_DIR)/*.hxx ../$(BINDIST)/$(DOCTYPE_DIR)/.
+	cp $(DOCTYPE_DIR)/*.doc ../$(BINDIST)/$(DOCTYPE_DIR)/.
+	cp ./README ../$(BINDIST)/.
+	cp ./Makefile ../$(BINDIST)/.
+	cp ./TUTORIAL ../$(BINDIST)/.
+	cp ./CHANGES ../$(BINDIST)/.
+	cp ./COPYRIGHT ../$(BINDIST)/.
+	cd ..; tar cf $(DIST)_$(OS).tar $(BINDIST)
+	rm -f ../$(DIST)_$(OS).tar.gz
+	cd ..; gzip $(DIST)_$(OS).tar
+	rm -rf ../$(BINDIST)

@@ -1,0 +1,15 @@
+The ONELINE doctype
+
+Format:
+The ONELINE doctype expects files in the following format:
+
+This is a document.
+Thi is another document.
+You see, each line is a document.
+
+There is no special handling of present.  Any element set name will cause
+the entire line to be presented.  There are no searchable fields.
+
+This doctype is really handy for things like phonebooks.
+
+

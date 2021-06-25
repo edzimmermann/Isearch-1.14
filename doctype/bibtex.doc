@@ -1,0 +1,53 @@
+The BIBTEX doctype
+
+
+Format:
+
+The BibTEX doctype expects files of the following format:
+
+@book{bookid,
+ fieldname1 = "field 1 data goes here",
+ title = "The title of the enr\try goes here.",
+ otherfield = "who nows what
+ }
+
+@article{articleid,
+ fieldname1 = "some other value",
+ title = "This is the other title",
+ yetanotherfield = "you get the idea, right?"
+ }
+
+the BibTEX doctype essentially does three things:
+1) Separate entries in a file into individual bibliographic entries.
+2) Locate the "title" field.  We cheat a little.
+3) Handle the presentation of either the entire entry or just the
+   stuff in the title field.
+
+In greater detail:
+1) How do we separate the entries?  We scan through the file looking for
+'}' characters.  That marks the end of a record.  Note that if you have
+the data for a field, and if it contains a '}' character, then the
+ParseFields() member function will get confused.  I recommend that you
+just avoid the '}' character in this version.  We need to change the
+scanner to ignore an ending curly brace inside of quotation marks and
+then that problem will be solved.
+
+2) How do we find the tite field?  We scan the entry looking for a 
+substring that equals "title" and that does not occur inside quotation
+marks.  Yes, we will adapt this code for better end of record detection
+noted in (1) above, but it will probably be well into March.
+
+3) How do we handle the present?  If the user asks for a "F" present, then
+we send back the whole record.  If they ask for the "B" present, then we
+check to be sure there is at least one field defined.  This will always
+be the "title" field (at least for now).  If it's there, we return the contents
+of that field.
+
+Will we support fields other than "title"?  Well, yes, we could.
+If there is enough (read: any) interest in adding things like "author"
+then I can do that fairly quickly.  Basically just copy the title
+code and change it a little.  Modifying the present method is trivial.
+Title was selected for two reasons: freeWAIS compatibility and the fact
+that title is the only field guaranteed to be in all bibliographic
+entry types.
+

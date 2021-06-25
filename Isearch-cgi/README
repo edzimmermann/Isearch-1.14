@@ -1,0 +1,229 @@
+                           CNIDR Isearch-cgi 1.05
+                                    12/3/96
+
+
+Overview
+--------
+
+Isearch-cgi is a set of utilities that, used in conjunction with CNIDR's
+Isearch search engine, provides full text and fielded search capability
+via the World Wide Web.
+
+Installation
+------------
+
+1)  Install a CGI compliant HTTP server
+
+	NCSA's latest server is recommended, but any CGI compliant
+        server will suffice.
+
+2)  Retrieve, compile and install the latest version of CNIDR Isearch
+	
+	You'll find Isearch in the
+                  <ftp://ftp.cnidr.org/pub/NIDR.tools/Isearch>  
+	directory.   You _must_ use version 1.10.01 or later to compile
+        the Isearch-cgi utilities.
+
+	You MUST successfully compile Isearch before compiling
+        Isearch-cgi. 
+	
+	This Makefile will attempt to compile Isearch for you if you 
+	haven't already done so.
+
+3)  Retrieve the latest version of Isearch-cgi
+
+	You'll find Isearch-cgi in the 
+	<ftp://ftp.cnidr.org/pub/NIDR.tools/Isearch-cgi> directory. 
+
+4)  Unzip and untar the distribution
+	
+	'gunzip Isearch-cgi-x.xx.tar.gz'
+	'tar xvf Isearch-cgi-x.xx.tar'
+
+	gunzip is a GNU freely available compression/decompression
+	utility.  Check you favorite GNU site for a recent copy.
+
+5)  Change to the Isearch-cgi-x.xx directory and edit the Makefile
+
+	Answer all questions in Makefile.  If your platform is not
+        listed, we would appreciate porting information for future
+	releases. 
+
+6)  Build the distribution
+
+	Type 'make'.  If all goes well, three binaries should be
+	created: 
+
+		isrch_fetch
+		isrch_srch
+		search_form
+
+	If all doesn't go well, send us mail or post to the Isite
+	mailing list (see below for more information).
+
+7)  Install the Isearch-cgi scripts
+
+	There are two shell scripts, one for each cgi-bin utility, that
+	must be configured and then installed in the cgi-bin directory
+	as well. These scripts are:
+
+		ifetch
+		isearch
+
+	Isearch-cgi-1.03 includes a script that will produce these files
+	for you.  The script's name is "Configure" and it requires a
+	single argument, the path to your databases.  After Configure is
+	run, the files it produces can be edited by hand, if needed.
+	
+
+Configuration of Isearch-cgi
+----------------------------
+
+1)  Build a database
+
+	Use Iindex to build a sample database.  To see the full features
+	of Isearch-cgi, index a small collection of HTML files,
+	preferably a collection that is marked up "well".  In other
+	words, use files that have an explicit "title" tag, "body" tag,
+	etc.
+
+	For this example, we'll build a database called TEST that will 
+	reside in the /usr/dbs directory.
+
+		'Iindex -d /usr/dbs/TEST -t SGMLTAG /htdocs/*.html'
+
+2)  Configure scripts
+
+	The only configuration required by Isearch-cgi takes place in
+	the Makefile and two scripts: ifetch, and isearch.
+
+	Edit those files (or run "Configure") and answer the questions. 
+
+Operation of Isearch-cgi
+------------------------
+
+1)  Create access points to databases
+
+	Create a base HTML file with the program search_form.  It takes 
+	two arguments: the path to your databases, and the name of the 
+	database this new page should access.  The page is printed to 
+	standard output, so you may redirect it to a file if you like.
+
+		search_form /home/databases TEST > form.html
+
+	There is another, optional argument that indicates to
+	search_form which type of search page you wish to generate.  The
+	form types are: 
+
+		-simple
+		-boolean
+		-advanced
+
+	If no type is given to search_form, it will default to -simple 
+
+	Examples:
+		search_form -simple /home/databases TEST > form.html
+		search_form -boolean /home/databases TEST > boolean.html
+		search_form -advanced /home/databases TEST > advanced.html
+
+2)  Load the form and search away!
+
+	When you run program search_form as above, it will generate a
+	search page customized for the TEST database.  When you load
+	this newly created search form with a Web browser, you can
+	perform fielded and full text queries and retrieve various
+	portions of the	resulting documents.
+
+	The output of search_form is a base search form, so it won't be
+	much to look at.  It is highly recommened that you modify the 
+	resulting page to suit your own tastes and needs.  search_form
+	gives you the options and fields... the design and layout are
+	all in your hands.
+
+3) Customizing to search databases of HTML documents
+
+	Often, Isearch-cgi is used to index the pages on a web site.
+	When searching, it is often advantageous to have links directly
+	to the actual HTML document instead of using isrch_fetch as a
+	go-between (to preserve the integrity of relative links).  It is
+	now possible to have your search results return URLs to the
+	actual documents. 
+
+	Isearch-cgi now automatically checks to see if the document lies
+	within the HTTP document root.  The location of the document
+	root is passed to Isearch-cgi through the HTTP server.
+
+
+More Information
+----------------
+
+Join the Isite-l mailing list.  To subscribe, send a message to
+listserv@vinca.cnidr.org with the body of the message as
+
+	"subscribe isite-l your name"
+
+You can then post messages by sending to isite-l@vinca.cnidr.org.
+
+You may also send mail to the authors:
+
+	Nassib Nassar <nrn@cnidr.org>
+	Kevin Gamiel <kgamiel@cnidr.org>
+	Tim Gemma <stone@k12.cnidr.org>
+
+Changes
+-------
+1.04    - Various small patches to allow building under Windows NT and
+	  Win32.  New isrch_srch.cxx main program.
+1.03.02 - Removed obsolete "path" from Search() call.  Now compiles!
+1.03.01 - Isearch-cgi gets the http document root from the environment. 
+1.03    - Renamed to 1.03 distribution.
+1.02.07 - Fixed bug that caused errors in "Retrieve Next".
+1.02.06 - <head> and <body> tags included to be gentler to some
+		browsers. (Thanks to Archie Warnock)
+          Isrch_srch, isrch_bool, and isrch_adv all merged into
+		isrch_srch. 
+          Shell scripts "ibool" and "iadv" removed.
+          The "Configure" script will now produce "isearch" and "ifetch"
+		when the database path name is given as a parameter.
+          Shell scripts "isearch" and "ifetch" now point to the
+		Isearch-cgi directory, where the actual binaries will
+		now reside.  The actual binaries (isrch_srch &
+		isrch_fetch) will no longer be copied to the cgi-bin
+		directory. 
+          Fixed bug that restricted BOOLEAN search terms to 2 words.
+1.02.05 - Isrch_srch, isrch_bool, and isrch_adv all use a shared
+		Search() function now.  This facilitates changes to
+		display format. 
+          Isrch_bool now parses out each argument in case a term is more
+		than one word.  Multiple word queries for a single term
+		are assumed to be "OR" terms.
+          Added new CGI variable:
+		HTTP_PATH	- If included in the form, it tells 
+				Isearch-cgi to try to provide a link
+				directly to the page, instead of using
+				isrch_fetch. 
+          Isrch_fetch now wraps any non-HTML document within <pre></pre>
+		statements.  It does this to all files whose names do
+		not end in ".html".  This makes viewing regular text
+		files easier. 
+1.02.04 - Tim Gemma takes over distribution and maintenance of
+		Isearch-cgi. 
+          Fixed 'Retrieve Next #' to display the correct number.
+          Changed isrch_form to search_form to differentiate it from the
+		actual cgi-bin programs.
+          Added ibool and isrch_bool for boolean searching.
+          Added iadv and isrch_adv for advanced, INFIX format searching.
+          Incorporated cgi.c and httpbox.c into a single cohesive C++
+		class, CGIAPP in cgi-util.cxx.
+          Boolean search no longer crashes when only 1 term is passed
+1.02.03 - Changed all use of the STRING method Print() to operator <<
+1.02.02	- Fixed bug in the maximum number of hits code
+1.02.01	- Adds new CGI variables:
+		START 		- result set record to display first in
+					hit list 
+		MAXHITS		- max number of result set records to
+					display 
+		ISEARCH_TERM	- Isearch command line tool query syntax
+					This is primarily used behind
+					the scenes to "fetch the next X
+					records" 

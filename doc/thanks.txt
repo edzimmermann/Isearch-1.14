@@ -1,0 +1,37 @@
+Many people have contributed to Isite.  The community thanks you!
+
+(If I missed your name on this list, PLEASE tell me!)
+
+Kevin Gamiel <kgamiel@cnidr.org>
+Jim Fullton <jmf@cnidr.org>
+Nassib Nassar <nrn@cnidr.org>
+Jon Magid <jem@cnidr.org>
+Glenn MacStravic <gem@cnidr.org>
+Laura Craighead <lmc@cnidr.org>
+Erik Scott <escott@cnidr.org>
+
+David Bryant <daveb@pwl-sparc2.pwl.com>
+Chris Colomb <chris@Thunderstrike.oit.unc.edu>
+Gary Crutcher <gcrutcher@datatrek.com>
+Russell East <reast@esri.com>
+Thomas H. Grayson <thg@mit.edu>
+Mike Gursky <mgursky@cdplus.com>
+Harlin <hah@lib.utexas.edu>
+Neophytos Iacovou <iacovou@arcwelder.micro.umn.edu>
+Bill Jordan <bjordan@u.washington.edu>
+John Kunze <jak@jak@violet.berkeley.edu>
+Ray R. Larson <ray@sherlock.SIMS.Berkeley.EDU>
+Ralph LaVan <rrl@oclc.org>
+Jonathan Lavigne <jlavigne@sulmail.stanford.edu>
+Bob Parkinson <rwp@omni.library.nottingham.ac.uk>
+Margaret St. Pierre <saint@bluangel.com>
+Thorn Roby <troby@carl.org>
+Rick Rodgers <rodgers@nlm.nih.gov>
+Anil Sharma <aksharma@dmu.ac.uk>
+Jane Smith <jane@cnidr.org>
+Margery Tibbetts <MZTUC@UCCMVSA.UCOP.EDU>
+Archie Warnock <warnock@clark.net>
+John Wehle <john@jwlab.feith.com>
+Edward Zimmermann <edz@bsn.com>
+Everyone in the ZIG (Z39.50 Implementors Group)
+

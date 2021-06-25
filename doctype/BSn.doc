@@ -1,0 +1,181 @@
+BSn's Isearch Document-Type Suite:
+
+First off: We too hate software that is three lines
+of code and 5K of copyright, but that is the sad
+shape of the contemporary Internet.
+
+-----------------------------------------------------
+Installation:
+============
+  Copy these files to your doctype/ directory and
+add what you want to or remove what you don't want
+from dtconf.inf.
+
+-----------------------------------------------------
+Description:
+===========
+
+FIRSTLINE:
+  A plain text (unfielded) document type where
+  the first (non blank) line is used to represent
+  the headline. The headline is stored as a field
+  ("headline") and is searchable--- as well as the
+  whole document ("fulltext").
+  This is the format of choice for plain text
+  documents such as prosa and poetry.
+
+MAILFOLDER:
+  This is for Unix mail folders as well as News
+  folders (articles saved by RN).
+
+MAILDIGEST:
+  Internet mail digest file format.
+
+LISTDIGEST:
+  Listserver mail digest file format.
+
+IRLIST:
+  Yet another mail digest format.
+
+COLONDOC:
+  This is not really a document type but a "major"
+  class of document formats. Colon tags are among
+  the most commonly used ASCII markup.
+  Should the document contain several records the
+  user must specify the record seperator (eg.
+  " *****" for Ziff CD)
+
+IAFA:
+  IAFA has guidelines for documentation of public
+  access FTP archives. This doctype handler reads
+  and processes these documents.
+  This is a colondoc with a "special" presentation
+  to get the "Brief Headlines" right.
+
+MEMODOC:
+  This is very much like the COLONDOC type but has
+  some changes to support a class of ascii memos.
+  The fields/tags are, like the COLONDOC.
+
+  Example:
+     Subject: A Memo
+     From: I. Search
+     Date: Tue Aug 15 13:24:38 MET DST 1995
+
+     -----
+
+     This is a memo!
+
+
+MEDLINE:
+  Although this too is a "colondoc" type, we know
+  alot more and handle many of the specialities of
+  loads of medline as well as medline type documents.
+  Record boundaries, field continuation etc are all
+  handled. On BSn Isearch platforms the date of the
+  document is also stored.
+
+FILMLINE:
+  This is filmline v 1.x (version 2.x is based upon
+  a SGML DTD), a special document format based heavily 
+  upon the Medline format. It was developed by BSn and
+  JFF for interchange of film cataloging information.
+  The only real difference from Medline is the semantics
+  of the tags.
+  This document type will NOT BE SUPPORTED to users not
+  members of the German FilmNet or a national LMZ pilot
+  site.
+
+FWU *):
+  This is another film interchange format used by
+  educational institutions in german speaking countries
+  and regions. It is maintained by the FWU in Munich.
+  Since FWU import/export is controlled by the Filmline
+  browser utility it is not supplied in this distribution.
+  National LMZ pilot sites that require the native use of
+  FWU format should NOT contact BSn but their project
+  liason officer.
+
+SGMLNORM:
+  Handles SGML-type documents with "normalized" tags
+  and entities, viz. end-tags and entity replacement. It
+  is not a validating SGML parser. In addition to storing
+  tags values as a field it also stores the values of
+  (complex) attributes to allow for a relatively complete
+  search and retrieval of document content.
+  SGML comments and declarations are correctly handled.
+
+HTML:
+  Although a subclass of SGMLNORM it handles most all
+  HTML (tag normalized or not). The only (known) limitation
+  is that it does not as yet support entity expansion. For
+  proper operation input documents should be entity normalized.
+  Most common incorrect uses of HTML markup are also correctly
+  handled. 
+
+REFERBIB:
+  This is for those refer(1) bibliographic databases.
+  It has been tested against some AT&T records.
+  It currently supports the concept of "Unified Field Names"
+  via a `compile-time' define in the source.
+
+GENEBANK and other Sequence file formats *):
+  Currently in alpha testing. Distribution policy has not yet
+  been established. Please contact BSn/Origene (origene@BSn.com)
+  for information.
+
+*) Not yet released for public distribution.
+
+--------------------------------------------------------------------
+Unified Field Names:
+  The %A field in refer, author in BibTeX, AU in Medline and
+  Filmline are not readable. While "experts" with intimite
+  knowledge of the "native" formats are at home with these
+  others are not. They are also not very well suited to
+  Isearch-cgi and other gateway models.
+  The tags are not really field names anyway so why not
+  just call "AU", "%A" etc "author". This makes it easier
+  to map to USMARC anyway.
+  This also will allow the development of "fielded
+  relevant feedback" concepts between databases with
+  different "native" formats!
+
+TODO List:
+  Put the basket of "unified field names" in a single
+  place to allow for multi-national collections of
+  unified names--- as well as makeing the maintainance
+  of these names less error prone.
+  Support "Unified Field Names" in Medline, Filmline.
+  Support for BibTeX and a few other bibliographic formats
+  in common use. Support for USMARC records.
+  A map between "Unified Field Names" as USMARC fields.
+
+  The map is "partially done" and should be finished in
+  the next few days-- see UnifiedList.txt.
+  
+Should YOU have "complete" documentation on the names of
+all medline tags (perhaps segmented into the flavours) please
+contract me (edz@BSn.com) to "complete" the unification of
+medline with other formats.
+
+
+Note:
+ if you select to use "filmline" YOU MUST ALSO USE "medline"
+ if you select to use "html" YOU MUST ALSO USE "sgmlnorm"
+ if you select to use "iafa" YOU MUST ALSO USE "colondoc"
+ if you select to use "listdigest", "maildigest" or "irlist"
+ YOU MUST also use "mailfolder".
+
+   /=============\
+   |   DOCTYPE   |
+   \=============/
+     |  |  |  |__________________ mailfolder
+     |  |  |                       |  |    |____ maildigest
+     |  |  |____ sgmlnorm          |  |_________ listdigest
+     |  |           |_______HTML   |____________ irlist
+     |  |
+     |  |_____________________medline
+     |                           |____ filmline
+     |_______ colondoc
+                |___ IAFA
+

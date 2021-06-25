@@ -1,0 +1,95 @@
+The USMARC Doctype
+
+
+Format:
+
+The USMARC doctype expects records in USMARC format.  To be fair, I'm not
+aware of any limitation in the USMARC doctype that would keep it from working
+with any MARC format, but:
+
+  1) I did this working from a USMARC reference.
+  and
+  2) I'm not entirely sure if Isearch can cope with 8-bit character sets.
+     For some reason, I seem to remember someone saying that it couldn't.
+
+In particular, this doctype expects to find one or more MARC records
+concatenated into a large file.  Keep in mind that under Unix (and just about
+every other operating system and file system I can think of) there is a 
+non-trivial penalty for having lots of small files laying around.  The example
+file "demomarc" in this directory contains two marc records concatenated.
+
+This doctype implements the ParseRecords, ParseFields, ParseWords, and Present
+methods.  ParseRecords is used to locate individual marc records within a file.
+ParseFields marks the individual fields of interest. ParseWords is used to 
+locate the beginnings of words, which is actually slightly tricky in MARC.
+The Present method is the four-argument version, so Isearch can return either
+raw MARC or the pseudo-card-catalog ASCII version if you ask for SUTRS.
+
+There are two functions that you will probably be interested in modifying:
+usefulMarcField() and marcFieldNumToName().  The function usefulMarcField()
+is passed a field number.  If you want to index that field, make this function
+return a 1, otherwise make it return 0.  The default is to always return 1, 
+which means "Index everything".  This is probably *not* what you want in a
+large system, but everyone is going to have to make their own decision on
+what is important to them.  The second function, marcFieldNumToName, is used
+to assign a name with meaning for humans to a field number.  For example,
+if field 245 is encountered, it will be indexed both as "245" and as "title".
+Again, you'll probably want to modify this function for your site.  This is
+done as a table instead of as a file because Isearch opens too many files
+as it is already.
+
+Example:
+
+sti-gw% Iindex -d huh -t usmarc /local/text/marc/demomarc 
+Iindex 1.10
+Building document list ...
+Building database huh:
+   Parsing files ...
+   Parsing /local/text/marc/demomarc ...
+   Indexing 122 words ...
+   Merging index ...
+Database files saved to disk.
+sti-gw% Isearch -d huh loathing
+Isearch 1.10
+Searching database huh:
+
+1 document(s) matched your query, 1 document(s) displayed.
+
+      Score   File
+   1.   100   /local/text/marc/demomarc
+Author:        Thompson, Hunter S.
+Title:         Fear and loathing in Las Vegas; a savage journey to the heart
+                  of the American dream, by Hunter S. Thompson. Illustrated by
+                  Ralph Steadman.
+Publisher:     New York, Random House [c1971].
+Pages:         206 p. illus. 22 cm.
+Notes:         First appeared in Rolling stone magazine, issue 95, Nov. 11,
+                  1971 and issue 96, Nov. 25, 1971.
+Subjects:      Thompson, Hunter S.
+Other authors: Las Vegas.
+
+
+Select file #: 
+sti-gw% Isearch -d huh 245/loathing
+Isearch 1.10
+Searching database huh:
+
+1 document(s) matched your query, 1 document(s) displayed.
+
+      Score   File
+   1.   100   /local/text/marc/demomarc
+Author:        Thompson, Hunter S.
+Title:         Fear and loathing in Las Vegas; a savage journey to the heart
+                  of the American dream, by Hunter S. Thompson. Illustrated by
+                  Ralph Steadman.
+Publisher:     New York, Random House [c1971].
+Pages:         206 p. illus. 22 cm.
+Notes:         First appeared in Rolling stone magazine, issue 95, Nov. 11,
+                  1971 and issue 96, Nov. 25, 1971.
+Subjects:      Thompson, Hunter S.
+Other authors: Las Vegas.
+
+
+Select file #: 
+sti-gw%
+

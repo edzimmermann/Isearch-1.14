@@ -1,0 +1,46 @@
+#!/bin/sh
+case $1 in
+"")
+  echo "Usage:"
+  echo "  config <path-to-databases>"
+  echo
+  exit 1;;
+esac
+if [ ! -d $1 ]
+then
+  echo "The directory '$1' was not found."
+  echo "Please double check the path you gave.  It must be an absolute path to the"
+  echo "location of your databases."
+  echo
+  echo "The scripts isearch and ifetch will still be created with the database"
+  echo "directory '$1'."
+  echo "If this is an error, please run configure again with the correct path."
+  echo
+ fi
+rm -f isearch
+echo "#!/bin/sh" > isearch
+echo " " >> isearch
+echo "# From this script, run the isrch_srch utility and pass a single argument" >> isearch
+echo "# that is the directory where your database are stored." >> isearch
+echo "#" >> isearch
+echo "# For example:" >> isearch
+echo "#" >> isearch
+echo "# /path/to/Isearch-cgi/isrch_srch /path/to/my/databases" >> isearch
+echo " " >> isearch
+echo exec `pwd`/isrch_srch $1 >> isearch
+echo " " >> isearch
+
+rm -f ifetch
+echo "#!/bin/sh" > ifetch
+echo " " >> ifetch
+echo "# From this script, run the isrch_fetch utility and pass 4 arguments:" >> ifetch
+echo "#" >> ifetch
+echo '# isrch_fetch <databases_path> $1 $2 $3' >> ifetch
+echo "#" >> ifetch
+echo "# /path/to/Isearch-cgi/isrch_fetch /path/to/my/databases" >> ifetch
+echo " " >> ifetch
+echo exec `pwd`/isrch_fetch $1 '$1' '$2' '$3' >> ifetch
+echo " " >> ifetch
+
+
+

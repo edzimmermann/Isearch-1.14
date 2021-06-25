@@ -1,0 +1,94 @@
+<HTML>
+
+<HEAD>
+<TITLE>Features of the 1.13 Release</TITLE>
+<META NAME="GENERATOR" CONTENT="Internet Assistant for Word 0.95">
+<META NAME="AUTHOR" CONTENT="Archibald Warnock">
+</HEAD>
+
+<BODY BGCOLOR="FFFFFF" TEXT="000000" LINK="0000FF" VLINK="B60000" ALINK="66D15E">
+
+<H1>The CNIDR ISEARCH Text Searching System</H1>
+<h2>Erik Scott, Scott Technologies, Inc.</h2>
+<h2>Archie Warnock, A/WWW Enterprises</h2>
+
+<H2>Features of the 1.13 Release</H2>
+
+<P> Isearch is a software system for searching though large amounts of
+text. The system allows a user to very quickly find out what documents
+are available that contain certain words.  Unlike older search systems,
+Isearch does not use a list of keywords or an abstract; every word of
+every document can be checked.  This allows greatly improved chances of
+discovering new information in old collections.
+
+<P> As an example, consider this real-world example: CNIDR uses Isearch
+to index and search a collection of over 2000 AIDS-related patents
+issued by the U.S. Patent and Trademark Office.  This collection of XXX
+megabytes of raw text can be searched in less than 1 second.  A
+researcher looking for patents containing either the word
+&quot;needle&quot; or the word &quot;syringe&quot; can submit the query
+and get results back about as fast as his desktop machine can display
+them.
+
+<H3>ISEARCH Features:</H3>
+
+<UL>
+
+  <LI>Searches large collections using a Free-Text search: no reliance
+on keywords, abstracts, or human-generated indexes.
+
+  <LI>Handles very large collections: over 1 gigabyte (1 million
+megabyte) collections can be handled on modest servers.  Essentially
+unlimited textbases can be searched with careful layout and planning.
+
+  <LI>Very sophisticated result sorting: The documents most likely to be
+useful are returned first.  Ranking is based on statistical analysis of
+word frequencies and is generalized for a wide variety of subjects and
+user skill levels.
+
+  <LI>Fast: documents are machine-indexed before searching, so
+non-matching documents needn't be read in.  Fast enough to make optical
+media a reasonable solution, and extremely responsive with cheap SCSI
+disks.
+
+  <LI>Works well with OCR document storage and retrieval systems: no
+need for people to classify documents, and the statistical ranking
+method is forgiving of OCR errors.  Potentially millions of pages can be
+made searchable for little more than photocopy costs.
+
+  <LI>Handles a wide range of document types: can handle text in formats
+from raw ASCII dumps to richly formatted SGML.  Convenient doctype
+interface allows handling of entirely new and unusual formats in a
+matter of hours.  Good supply of free and commercial doctypes available
+from third parties.
+
+  <LI>Efficient use of disk resources: Indexes are relatively compact,
+generally smaller than the original collection, and yet contain
+references to every word in the textbase.
+
+  <LI>Text maintenance commands: old documents can be deleted instantly
+and new data can be added without having to re-index the entire
+collection.
+
+  <LI>Portable and Scalable: works well on Unix machines from Linux PCs
+to Crays.  Takes advantage of Very Large Memory (VLM) technology for
+Digital AlphaServers. Support for Windows NT in 3Q96.
+
+  <LI>Integrates smoothly with World Wide Web (WWW) and ANSI Z39.50
+servers: Anyone can search an Isearch textbase using their favorite web
+browser.  When used with CNIDR's Isite package, Isearch can be used
+through a Z39.50 session to interoperate with library automation
+software.  Isearch and Isite together form a three-tier client-server
+architecture to allow essentially unlimited capacity growth.
+
+  <LI>Easy to customize: The modular, object-oriented structure of
+Isearch means that new features can be added independently of the
+Isearch core.  Third party extension is facilitated by using
+well-defined Application Programming Interfaces (APIs) implemented in
+C++.
+
+</UL>
+
+</BODY>
+
+</HTML>

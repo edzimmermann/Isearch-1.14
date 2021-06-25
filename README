@@ -1,0 +1,52 @@
+Isearch
+
+This system contains both a command-line indexer/search engine for
+general purpose search and retrieval, and a C++ class library for
+integrating high speed text search features into your applications.
+
+COMPILATION INSTRUCTIONS (unless you downloaded precompiled binaries):
+Type `make' to compile.  That's it!  (Make sure you have gcc and the
+g++ library installed first.)
+
+INSTALLATION INSTRUCTIONS: Type `make install' to copy binaries into
+/usr/local/bin/.
+
+See the file TUTORIAL for more details.  Three executables are
+created: Iindex, Isearch, and Iutil.  You can run them without any
+command-line options to see a list of commands.
+
+We have many plans for enhancements over the next several weeks, but
+your feedback will let me know what you would like to see in future
+versions.  Also, if you make any additions or corrections, please tell
+me so I can try to integrate them into the distribution.
+
+Some documentation is available on-line at
+
+	<URL:http://vinca.cnidr.org/software/Isearch/Isearch.html>
+
+This software was made possible by the National Science Foundation and
+others.  I also need to acknowledge several people that contributed to
+the initial development phase of Isearch:
+
+	Jim Fullton (CNIDR)
+	Erik Scott (Scott Technologies)
+	Kevin Gamiel (CNIDR)
+	Archie Warnock (A/WWW Enterprises)
+
+Many other people have contributed in various ways, and I have tried
+to acknowledge their assistance where appropriate.  Many thanks to all
+of them.
+
+Have fun!
+
+Nassib Nassar, nrn@cnidr.org
+
+--------------------------------------------------------------------------
+This material is based on work sponsored by the National Science
+Foundation under Cooperative Agreement No. NCR-9216963.  The Government
+has certain rights in this material. 
+
+Any opinions, findings and conclusions or recommendations expressed in
+this publication are those of the author(s) and do not necessarily reflect
+the views of the National Science Foundation.
+--------------------------------------------------------------------------

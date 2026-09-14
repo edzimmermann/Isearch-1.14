@@ -1,5 +1,7 @@
 $Isearch-1.14$ 
 
+## If you want to look at its latest contemporary incarnation: <https://corequarry.com>. Faster, more powerful. more featured, vastly more sophisticated query algebra, dynamic unit of retrieval, more document type handlers and many more datatypes including dense embeddings.. And Apache 2.0 licensed. 
+
 ## To my knowledge this was the very last public release of Isearch...
 ## (interestingly I hear a number of sites are still using it)
 
